@@ -6,4 +6,5 @@ const ComponenteLogin = () => {
   )
 }
 
+console.log("Hola");
 export default ComponenteLogin
