@@ -73,7 +73,7 @@ const Login = () => {
 
           <div className="card-footer">
             <div className="text-center">
-              <p>
+              <p className="mt-2">
                 No tienes cuenta?{" "}
                 <a id="registro" href="#!">
                   Create una!
