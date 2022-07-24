@@ -2,7 +2,7 @@ import React from "react";
 
 const Input = ({ attribute, handleChange, param }) => {
     return (
-        <div>
+        <div className="w-50" >
             <input
                 id={attribute.id}
                 name={attribute.name}
