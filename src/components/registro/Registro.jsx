@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import "./Registro.css";
 import Label from './label/Label';
 import Input from './input/Input';
-import Option from './option/Option';
+/* import Option from './option/Option'; */
 
 const Registro = () => {
   const [user, setUser] = useState("");
@@ -13,17 +13,20 @@ const Registro = () => {
   const handleChange = (name, value) => {
     name === "usuario" ? setUser(value) : setPassword(value);
   };
-   
-  const [ciudades, setCiudades] = useState([]);
+  
+/*   const [cargando, setCargando] = useState(true) */
+
   const [departamentos, setDepartamentos] = useState([]);
-  let idDepartamento = 3213;
+  const [ciudades, setCiudades] = useState([]);
+  
+  const idDepartamento = 3213;
 
   useEffect(() => {
     fetch("https://crypto.develotion.com/departamentos.php")
   .then(r => r.json())
   .then(datos => {
-    //console.log(datos);    
-    setCiudades(datos.departamentos);         
+    //console.log(datos);     
+    setDepartamentos(datos.departamentos);         
   })
   }, [])
 
@@ -32,7 +35,7 @@ const Registro = () => {
   .then(r => r.json())
   .then(datos => {
     console.log(datos);    
-    setDepartamentos(datos.ciudades);         
+    setCiudades(datos.ciudades);         
   })
   }, [])
   
@@ -64,13 +67,13 @@ const Registro = () => {
         </Row>
         <Row className = "justify-content-center mb-3">
           <Form.Select className="w-50 m-2"> 
-          {ciudades.map(ciudad => <option key={ciudad.id} id={ciudad.id}>{ciudad.nombre}</option>)}
+          {departamentos.map(dep => <option key={dep.id} id={dep.id}>{dep.nombre}</option>)}
           </Form.Select>
         </Row>
-        <Row className = "justify-content-center mb-3"> 
+        <Row className = "justify-content-center mb-3">
           <Form.Select className="w-50 m-2">
-          {departamentos.map(dep => <option key={dep.id} id={dep.id}>{dep.nombre}</option>)}
-          </Form.Select>   
+           {ciudades.map(ciudad => <option key={ciudad.id} id={ciudad.id}>{ciudad.nombre}</option>)}
+          </Form.Select>
         </Row>         
         <Row className = "justify-content-center mb-3">
           <input type="button" className="w-50 btn btn-dark btn-block" value="Registrarse"/>
@@ -82,4 +85,5 @@ const Registro = () => {
 
 export default Registro
 
+/* <Option optionMostrar={departamentos}/> */
  /* <Option key={ciudad.id} id={ciudad.id} nombre={ciudad.nombre}/>*/
