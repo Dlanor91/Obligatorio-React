@@ -1,4 +1,4 @@
-import React, { useState,useEffect} from 'react'
+import React, { useState,useEffect,useRef} from 'react'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
@@ -14,30 +14,38 @@ const Registro = () => {
     name === "usuario" ? setUser(value) : setPassword(value);
   };
   
-/*   const [cargando, setCargando] = useState(true) */
 
   const [departamentos, setDepartamentos] = useState([]);
   const [ciudades, setCiudades] = useState([]);
   
-  const idDepartamento = 3213;
+  const [cargando, setCargando] = useState(false);  
+  const [idDepartamento, setIdDepartamento] = useState(0);
 
+  const capturarId =(event)=>{
+    setIdDepartamento(event.currentTarget.value)
+  }
   useEffect(() => {
     fetch("https://crypto.develotion.com/departamentos.php")
   .then(r => r.json())
   .then(datos => {
-    //console.log(datos);     
-    setDepartamentos(datos.departamentos);         
+    //console.log(datos);
+    
+    setDepartamentos(datos.departamentos);
   })
   }, [])
 
-  useEffect(() => {
+  
+  useEffect(() => {    
     fetch(`https://crypto.develotion.com/ciudades.php?idDepartamento=${idDepartamento}`)
-  .then(r => r.json())
-  .then(datos => {
-    console.log(datos);    
-    setCiudades(datos.ciudades);         
-  })
-  }, [])
+    .then(r => r.json())
+    .then(datos => {
+      /* console.log(cargando);  */
+      (idDepartamento===0)? setCargando(false):setCargando(true); 
+          
+      setCiudades(datos.ciudades);                        
+    })
+   }, [ciudades])
+  
   
   return (
     <Container className='align-content-center'>      
@@ -66,14 +74,17 @@ const Registro = () => {
           />  
         </Row>
         <Row className = "justify-content-center mb-3">
-          <Form.Select className="w-50 m-2"> 
-          {departamentos.map(dep => <option key={dep.id} id={dep.id}>{dep.nombre}</option>)}
+          <Form.Select className="w-50 m-2" onChange={capturarId}>
+          <option id='0'>Seleccione un departamento</option> 
+          {departamentos.map(dep => <option key={dep.id} value={dep.id}>{dep.nombre}</option>)}
           </Form.Select>
         </Row>
         <Row className = "justify-content-center mb-3">
           <Form.Select className="w-50 m-2">
-           {ciudades.map(ciudad => <option key={ciudad.id} id={ciudad.id}>{ciudad.nombre}</option>)}
-          </Form.Select>
+           {(cargando)? 
+                      ciudades.map(ciudad => <option key={ciudad.id} value={ciudad.id}>{ciudad.nombre}</option>)                     
+                      : <option>Seleccione un departamento ...</option>}
+          </Form.Select>          
         </Row>         
         <Row className = "justify-content-center mb-3">
           <input type="button" className="w-50 btn btn-dark btn-block" value="Registrarse"/>
@@ -84,6 +95,3 @@ const Registro = () => {
 }
 
 export default Registro
-
-/* <Option optionMostrar={departamentos}/> */
- /* <Option key={ciudad.id} id={ciudad.id} nombre={ciudad.nombre}/>*/
