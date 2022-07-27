@@ -8,21 +8,41 @@ import Input from './input/Input';
 /* import Option from './option/Option'; */
 
 const Registro = () => {
-  const [user, setUser] = useState("");
-  const [password, setPassword] = useState("");
-  const handleChange = (name, value) => {
-    name === "usuario" ? setUser(value) : setPassword(value);
-  };
-  
+
+  const [datosUsuario, setDatosUsuario] = useState({
+    user: '',
+    password: ''
+})
+ 
+const handleChange = (event) => {
+  /* console.log(event.target.name)
+  console.log(event.target.value) */
+  setDatosUsuario({
+      ...datosUsuario,
+      [event.target.name] : event.target.value
+  })
+  /* console.log(datosUsuario); */
+}  
 
   const [departamentos, setDepartamentos] = useState([]);
   const [ciudades, setCiudades] = useState([]);
   
   const [cargando, setCargando] = useState(false);  
   const [idDepartamento, setIdDepartamento] = useState(0);
+  const [idCiudad, setIdCiudad] = useState(0);
 
-  const capturarId =(event)=>{
+  const capturarIdDepartamento =(event)=>{    
     setIdDepartamento(event.currentTarget.value)
+  }
+  
+  const capturarIdCiudad =(event)=>{
+    /* console.log(event.target.value); */
+    setIdCiudad(event.target.value);    
+  }
+
+  const btnRegistro = () =>{
+    const datos = {usuario:`${datosUsuario.user}`, password:`${datosUsuario.password}`, departamento :{idDepartamento}, ciudad: {idCiudad}}
+    console.log(datos);
   }
   useEffect(() => {
     fetch("https://crypto.develotion.com/departamentos.php")
@@ -44,8 +64,7 @@ const Registro = () => {
           
       setCiudades(datos.ciudades);                        
     })
-   }, [ciudades])
-  
+   }, [ciudades])  
   
   return (
     <Container className='align-content-center'>      
@@ -60,7 +79,7 @@ const Registro = () => {
                     placeholder: "Usuario...",
                   }}
                   handleChange={handleChange}
-          />        
+          />                 
         </Row>
         <Row className = "justify-content-center mb-3">
           <Label texto="Contraseña" htmlEnlace="password"/>
@@ -74,20 +93,21 @@ const Registro = () => {
           />  
         </Row>
         <Row className = "justify-content-center mb-3">
-          <Form.Select className="w-50 m-2" onChange={capturarId}>
-          <option id='0'>Seleccione un departamento</option> 
-          {departamentos.map(dep => <option key={dep.id} value={dep.id}>{dep.nombre}</option>)}
+          <Form.Select className="w-50 m-2" onChange={capturarIdDepartamento}>          
+           <option id='0'>Seleccione un departamento</option>
+           {departamentos.map(dep => <option key={dep.id} value={dep.id}>{dep.nombre}</option>)}
           </Form.Select>
         </Row>
-        <Row className = "justify-content-center mb-3">
-          <Form.Select className="w-50 m-2">
+        <Row className = "justify-content-center mb-3" >
+          <Form.Select className="w-50 m-2" onChange={capturarIdCiudad}>
            {(cargando)? 
-                      ciudades.map(ciudad => <option key={ciudad.id} value={ciudad.id}>{ciudad.nombre}</option>)                     
+                      ciudades.length !=0? ciudades.map(city=> <option key={city.id} value={city.id}>{city.nombre}</option>)
+                        : <option>Seleccione un departamento ...</option>                   
                       : <option>Seleccione un departamento ...</option>}
           </Form.Select>          
         </Row>         
         <Row className = "justify-content-center mb-3">
-          <input type="button" className="w-50 btn btn-dark btn-block" value="Registrarse"/>
+          <input type="button" className="w-50 btn btn-dark btn-block" onClick={btnRegistro} value="Registrarse"/>
         </Row>
       </Form>
     </Container>
