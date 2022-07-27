@@ -25,18 +25,18 @@ const handleChange = (event) => {
 }  
 
   const [departamentos, setDepartamentos] = useState([]);
-  const [ciudades, setCiudades] = useState([]);
+  const [ciudades, setCiudades] = useState([]);  
   
-  const [cargando, setCargando] = useState(false);  
   const [idDepartamento, setIdDepartamento] = useState(0);
   const [idCiudad, setIdCiudad] = useState(0);
 
   const capturarIdDepartamento =(event)=>{    
     setIdDepartamento(event.currentTarget.value)
+    setIdCiudad(0);
   }
-  
+
   const capturarIdCiudad =(event)=>{
-    /* console.log(event.target.value); */
+    /* console.log(event.target.value); */    
     setIdCiudad(event.target.value);    
   }
 
@@ -48,24 +48,22 @@ const handleChange = (event) => {
     fetch("https://crypto.develotion.com/departamentos.php")
   .then(r => r.json())
   .then(datos => {
-    //console.log(datos);
-    
-    setDepartamentos(datos.departamentos);
+    //console.log(datos);    
+    setDepartamentos(datos.departamentos);        
   })
-  }, [])
-
+  }, [departamentos])
+  const selectDepartamentos =[{id:0,nombre:"Seleccione un Departamento..."}, ...departamentos];
+ 
   
   useEffect(() => {    
     fetch(`https://crypto.develotion.com/ciudades.php?idDepartamento=${idDepartamento}`)
     .then(r => r.json())
-    .then(datos => {
-      /* console.log(cargando);  */
-      (idDepartamento===0)? setCargando(false):setCargando(true); 
-          
-      setCiudades(datos.ciudades);                        
+    .then(datos => {                
+      setCiudades(datos.ciudades);      
     })
    }, [ciudades])  
-  
+  const selectCiudades =[{id:0,nombre:"Seleccione una ciudad..."}, ...ciudades];
+ 
   return (
     <Container className='align-content-center'>      
       <Form className='formulario '> 
@@ -93,17 +91,15 @@ const handleChange = (event) => {
           />  
         </Row>
         <Row className = "justify-content-center mb-3">
-          <Form.Select className="w-50 m-2" onChange={capturarIdDepartamento}>          
-           <option id='0'>Seleccione un departamento</option>
-           {departamentos.map(dep => <option key={dep.id} value={dep.id}>{dep.nombre}</option>)}
+          <Form.Select className="w-50 m-2" onChange={capturarIdDepartamento}>
+           {selectDepartamentos.map(dep => <option key={dep.id} value={dep.id}>{dep.nombre}</option>)}
           </Form.Select>
         </Row>
         <Row className = "justify-content-center mb-3" >
           <Form.Select className="w-50 m-2" onChange={capturarIdCiudad}>
-           {(cargando)? 
-                      ciudades.length !=0? ciudades.map(city=> <option key={city.id} value={city.id}>{city.nombre}</option>)
-                        : <option>Seleccione un departamento ...</option>                   
-                      : <option>Seleccione un departamento ...</option>}
+          {(idDepartamento !=0)? 
+                                selectCiudades.map(city=> <option key={city.id} value={city.id}>{city.nombre}</option>)                                         
+                                : <option>Seleccione un Departamento ...</option>} 
           </Form.Select>          
         </Row>         
         <Row className = "justify-content-center mb-3">
