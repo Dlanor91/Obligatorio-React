@@ -41,7 +41,7 @@ const handleChange = (event) => {
   }
 
   const btnRegistro = () =>{
-    const datos = {usuario:`${datosUsuario.user}`, password:`${datosUsuario.password}`, departamento :{idDepartamento}, ciudad: {idCiudad}}
+    const datos = {usuario:`${datosUsuario.user}`, password:`${datosUsuario.password}`, departamento :`${idDepartamento}`, ciudad: `${idCiudad}`}
     console.log(datos);
   }
   useEffect(() => {
