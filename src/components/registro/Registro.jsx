@@ -62,7 +62,7 @@ const handleChange = (event) => {
       setCiudades(datos.ciudades);      
     })
    }, [ciudades])  
-  const selectCiudades =[{id:0,nombre:"Seleccione una ciudad..."}, ...ciudades];
+  const selectCiudades =[{id:0,nombre:"Seleccione una Ciudad..."}, ...ciudades];
  
   return (
     <Container className='align-content-center'>      
