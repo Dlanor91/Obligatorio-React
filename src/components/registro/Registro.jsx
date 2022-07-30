@@ -5,9 +5,46 @@ import Form from 'react-bootstrap/Form';
 import "./Registro.css";
 import Label from './label/Label';
 import Input from './input/Input';
+import * as yup from 'yup'
+import { useFormik } from 'formik'
+import TextField from '@mui/material/TextField'
+import { apiRegistro } from '../../services/serviciosApi';
 /* import Option from './option/Option'; */
 
 const Registro = () => {
+
+    const validationSchema = yup.object({
+        usuario: yup
+            .string('Ingrese su usuario')
+            .required('El usuario no puede estar vacio'),
+        password: yup
+            .string('Ingrese su contraseña')
+            .required('La contraseña no puede estar vacia'),
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            usuario: '',
+            password: ''
+        },
+        validationSchema: validationSchema,
+        onSubmit: (values) => registro(values)
+    });
+
+    const registro = async (usuario) => {
+
+        try {
+            console.log('usuario', usuario);
+            const respuesta = await apiRegistro(usuario);
+            console.log('respuesta', respuesta);
+            localStorage.setItem("usuario", JSON.stringify(usuario));
+            sessionStorage.setItem("DatosLog", JSON.stringify(respuesta));
+            const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
+            alert(dataLog.apiKey);
+        } catch (error) {
+            alert(error);
+        }
+    }
 
     const [datosUsuario, setDatosUsuario] = useState({
         user: '',
@@ -66,18 +103,43 @@ const Registro = () => {
 
     return (
         <Container className='align-content-center'>
-            <Form className='formulario '>
+            <Form className='formulario' onSubmit={formik.handleSubmit}>
                 <h2 className='formulario-titulo py-2'>Registro</h2>
-                <Row className="justify-content-center mb-3">
-                    <Label texto="Usuario" htmlEnlace="user" />
-                    <Input attribute={{
-                        id: "user",
-                        name: "user",
-                        type: "text",
-                        placeholder: "Usuario...",
-                    }}
-                        handleChange={handleChange}
-                    />
+                <Row className="justify-content-center m-3">
+                <TextField
+                                    fullWidth
+                                    sx={{
+                                        input: {
+                                            color: "white",
+                                            backgroundColor: "grey",                                                 
+                                        },
+                                        label: {
+                                            color: "white",
+                                            borderColor: "white",
+                                        },
+                                        fieldset: {
+                                            color: "white"
+                                        },
+                                        "& .MuiOutlinedInput-root": {
+                                            "& fieldset": {
+                                                borderColor: "white"
+                                            },
+                                            "&.Mui-focused fieldset": {
+                                                borderColor: "yellow"
+                                            }
+                                        },
+                                        "& label.Mui-focused": {
+                                            color: "yellow"
+                                        }
+                                    }}
+                                    id="usuario"
+                                    name="usuario"
+                                    label="Usuario"
+                                    value={formik.values.usuario}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.usuario && Boolean(formik.errors.usuario)}
+                                    helperText={formik.touched.usuario && formik.errors.usuario}
+                                />
                 </Row>
                 <Row className="justify-content-center mb-3">
                     <Label texto="Contraseña" htmlEnlace="password" />
@@ -103,7 +165,12 @@ const Registro = () => {
                     </Form.Select>
                 </Row>
                 <Row className="justify-content-center mb-3">
-                    <input type="button" className="w-50 btn btn-dark btn-block" onClick={btnRegistro} value="Registrarse" />
+                    <button
+                                    type="submit"
+                                    className="btn btn-dark btn-block m-3 w-50"
+                                >
+                                    Registrarse{" "}
+                                </button>
                 </Row>
             </Form>
         </Container>

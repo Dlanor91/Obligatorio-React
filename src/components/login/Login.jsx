@@ -6,8 +6,6 @@ import * as yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
 
-
-
 const Login = () => {
 
     const validationSchema = yup.object({
@@ -31,9 +29,9 @@ const Login = () => {
     const Logueo = async (usuario) => {
 
         try {
-            console.log('usuario', usuario);
+            //console.log('usuario', usuario);
             const respuesta = await apiLogin(usuario);
-            console.log('respuesta', respuesta);
+            //console.log('respuesta', respuesta);
             localStorage.setItem("usuario", JSON.stringify(usuario));
             sessionStorage.setItem("DatosLog", JSON.stringify(respuesta));
             const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
