@@ -23,6 +23,7 @@ export const apiLogin = async ({usuario,password}) => {
 
         switch (result.codigo) {
             case 200:
+                
                 return Promise.resolve(result);
                         
             default:
