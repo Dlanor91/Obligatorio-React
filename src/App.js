@@ -13,9 +13,9 @@ const App = () => {
   return (
     <div className="App">
       <Provider store={store}>
-        <Login />
+        {/* <Login /> */}
         <Registro />
-        <Dashboard />
+        {/* <Dashboard /> */}
       </Provider>
     </div>
   );
