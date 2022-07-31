@@ -27,8 +27,14 @@ const Monedas = () => {
         fetch(`https://crypto.develotion.com/monedas.php`,{headers})
             .then(r => r.json())
             .then(datos => {
-                  dispatch(guardarMonedas(datos))      
-                  console.log(datos)       
+
+                switch (datos.codigo) {
+                    case 200:
+                        dispatch(guardarMonedas(datos))  
+                        break;              
+                    default:
+                        break;
+                }                              
             })
     },[]);
 

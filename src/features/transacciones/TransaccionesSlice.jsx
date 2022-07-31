@@ -1,21 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState ={
-    transacciones:[]
+const initialState = {
+    transacciones: []
 }
 
-export const tranSlice = createSlice ({
+export const tranSlice = createSlice({
 
-    name:"transacciones",
+    name: "transacciones",
     initialState,
     reducers: {
-        guardarTransacciones:(state,action) => {
+        guardarTransacciones: (state, action) => {
             state.transacciones = action.payload;
+        },
+        crearTransaccion: (state, action) => {
+            state.transacciones.push(action.payload);
         }
     }
 
 
 });
 
-export const {guardarTransacciones} = tranSlice.actions;
+export const { guardarTransacciones, crearTransaccion } = tranSlice.actions;
 export default tranSlice.reducer;
