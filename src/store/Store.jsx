@@ -1,0 +1,11 @@
+import { configureStore } from "@reduxjs/toolkit";
+import transaccionesReducer from '../features/transacciones/TransaccionesSlice'
+import monedasReducer from '../features/monedas/MonedasSlice'
+
+export const store = configureStore({
+
+    reducer: {
+        transacciones: transaccionesReducer,
+        monedas: monedasReducer
+    }
+})

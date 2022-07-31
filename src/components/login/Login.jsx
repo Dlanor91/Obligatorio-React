@@ -5,6 +5,7 @@ import { apiLogin } from "../../services/serviciosApi";
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
+import Transacciones from '../dashboard/transacciones/Transacciones'
 
 const Login = () => {
 
@@ -112,6 +113,7 @@ const Login = () => {
                                         }
                                     }}
                                     id="password"
+                                    type="password"
                                     name="password"
                                     label="Password"
                                     value={formik.values.password}
