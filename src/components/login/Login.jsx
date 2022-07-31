@@ -1,7 +1,7 @@
 import React from "react";
 import Titulo from "./titulo/Titulo";
 import "./Login.css";
-import { apiLogin } from "../../services/serviciosApi";
+import { apiLogin } from "../../services/ServiciosApi";
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
@@ -12,10 +12,10 @@ const Login = () => {
     const validationSchema = yup.object({
         usuario: yup
             .string('Ingrese su usuario')
-            .required('El usuario no puede estar vacio'),
+            .required('El usuario no puede estar vacío.'),
         password: yup
             .string('Ingrese su contraseña')
-            .required('La contraseña no puede estar vacia'),
+            .required('La contraseña no puede estar vacía.'),
     });
 
     const formik = useFormik({
@@ -115,7 +115,8 @@ const Login = () => {
                                     id="password"
                                     type="password"
                                     name="password"
-                                    label="Password"
+                                    label="Contraseña"
+                                    type="password"
                                     value={formik.values.password}
                                     onChange={formik.handleChange}
                                     error={formik.touched.password && Boolean(formik.errors.password)}

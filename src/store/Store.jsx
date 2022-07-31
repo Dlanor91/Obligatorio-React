@@ -1,11 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
+
 import transaccionesReducer from '../features/transacciones/TransaccionesSlice'
 import monedasReducer from '../features/monedas/MonedasSlice'
-
+import DepartamentosSlice,{departamentosSlice} from "../features/DepartamentosSlice";
 export const store = configureStore({
 
     reducer: {
         transacciones: transaccionesReducer,
-        monedas: monedasReducer
-    }
+        monedas: monedasReducer,
+        departamentos: DepartamentosSlice, 
+    },
 })
+
