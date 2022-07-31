@@ -8,12 +8,16 @@ import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
 import { apiRegistro } from '../../services/ServiciosApi';
 import { useDispatch,useSelector } from 'react-redux';
-import { guardarDepartamentos } from '../../features/departamentos/DepartamentosSlice';
+import { guardarCiudades } from '../../features/ciudades/CiudadesSlice';
+import { guardarDepartamentos } from '../../features/departamentos/DepartamentosSlice'
 
 const Registro = () => {
-
+    
     const dispatchDep = useDispatch();
-    const mostrarDepartamentos = useSelector(state => state.departamentos.departamentos)
+    const mostrarDepartamentos = useSelector((state) => state.departamentos.departamentos); 
+
+    const dispatchCiudades = useDispatch();
+    const mostrarCiudades = useSelector(state => state.ciudades.ciudades); ;
     
     const validationSchema = yup.object({
         usuario: yup
@@ -47,38 +51,52 @@ const Registro = () => {
             alert(error);
         }
     }  
-
-    const [departamentos, setDepartamentos] = useState([]);
-    const [ciudades, setCiudades] = useState([]);
-
+    
     const [idDepartamento, setIdDepartamento] = useState(0);    
 
     const refCiudad = useRef(0);    
 
     const capturarIdDepartamento = (event) => {
         setIdDepartamento(event.currentTarget.value);   
-    }
-    
-    //const departamentosMostrar = useSelector(state => state.departamentos.departamentos);
+    } 
 
     useEffect(() => {
-        fetch("https://crypto.develotion.com/departamentos.php")
-            .then(r => r.json())
-            .then(datos => {
-                //console.log(datos);    
-                //setDepartamentos(datos.departamentos);
-                dispatchDep(guardarDepartamentos(datos))
-            })
+        async function fetchData() {
+            try { 
+                const response = await fetch("https://crypto.develotion.com/departamentos.php");                
+                if (response.status == 200) {
+                    const json = await response.json();                    
+                    dispatchDep(guardarDepartamentos(json))
+                } else {
+                    alert("No se obtuvo una respuesta correcta");
+                }            
+            } catch (error) {
+                alert("Error al cargar los datos.");
+            }
+        }
+        fetchData();
     }, [])
-    //const selectDepartamentos = [{ id: 0, nombre: "Seleccione un Departamento..." }, ...mostrarDepartamentos];
-
+   
     useEffect(() => {
-        fetch(`https://crypto.develotion.com/ciudades.php?idDepartamento=${idDepartamento}`)
-            .then(r => r.json())
-            .then(datos => {
-                setCiudades(datos.ciudades);
-            })
-    }, [ciudades])  
+        async function fetchData() {
+            try { 
+                const response = await fetch(`https://crypto.develotion.com/ciudades.php?idDepartamento=${idDepartamento}`);
+                console.log('response', response)
+                if (response.status == 200) {
+                    const json = await response.json();
+                    dispatchCiudades(guardarCiudades(json))
+                    
+                    console.log(json)
+                } else {
+                    alert("No se obtuvo una respuesta correcta");
+                }            
+            } catch (error) {
+                alert("Error al cargar los datos.");
+            }
+        }
+        fetchData(); 
+           
+    }, [])  
     
     useEffect (() =>{
         if(refCiudad.current){
@@ -161,17 +179,18 @@ const Registro = () => {
                 />
                 </Row>
                 <Row className="justify-content-center mb-3"> 
-                   <Form.Select 
+                {/* <SelectDep onchange={formik.handleChange} onclick={capturarIdDepartamento} value={formik.values.idDepartamento}/>
+                   */} <Form.Select 
                                 id="idDepartamento" 
                                 name="idDepartamento"
                                 className="w-50 m-2" 
                                 onChange={formik.handleChange} 
                                 onClick={capturarIdDepartamento} 
                                 value={formik.values.idDepartamento}                                                   
-                                >
-                        {/* {selectDepartamentos.map(dep => <option key={dep.id} value={dep.id}>{dep.nombre}</option>)}
-                         */}
-                    </Form.Select> 
+                    >  
+                        <option key="0" value="0">Seleccione un Departamento ...</option> 
+                       {mostrarDepartamentos.departamentos.map(dep => <option key={dep.id} value={dep.id}>{dep.nombre}</option>)} 
+                    </Form.Select>
                 </Row>
                 {idDepartamento !=0 && <Row className="justify-content-center mb-3" >                
                     <Form.Select
@@ -183,8 +202,8 @@ const Registro = () => {
                         value={formik.values.idCiudad}
                     >
                         <option key="0" value="0">Seleccione una Ciudad ...</option>  
-                        {ciudades.map(city => <option key={city.id} value={city.id}>{city.nombre}</option>)}
-                                                                       
+                         {mostrarCiudades.ciudades.map(city => <option key={city.id} value={city.id}>{city.nombre}</option>)}
+                                                                 
                     </Form.Select>
                 </Row> }
                 <Row className="justify-content-center mb-3">
