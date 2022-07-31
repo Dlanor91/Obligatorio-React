@@ -13,7 +13,8 @@ import { guardarDepartamentos } from '../../features/DepartamentosSlice';
 
 const Registro = () => {
 
-    const dispatch = useDispatch();
+    const dispatchDep = useDispatch();
+    const mostrarDepartamentos = useSelector(state => state.departamentos.departamentos)
     
     const validationSchema = yup.object({
         usuario: yup
@@ -66,10 +67,11 @@ const Registro = () => {
             .then(r => r.json())
             .then(datos => {
                 //console.log(datos);    
-                setDepartamentos(datos.departamentos);
+                //setDepartamentos(datos.departamentos);
+                dispatchDep(guardarDepartamentos(datos))
             })
-    }, [departamentos])
-    const selectDepartamentos = [{ id: 0, nombre: "Seleccione un Departamento..." }, ...departamentos];
+    }, [])
+    //const selectDepartamentos = [{ id: 0, nombre: "Seleccione un Departamento..." }, ...mostrarDepartamentos];
 
     useEffect(() => {
         fetch(`https://crypto.develotion.com/ciudades.php?idDepartamento=${idDepartamento}`)
@@ -168,8 +170,8 @@ const Registro = () => {
                                 onClick={capturarIdDepartamento} 
                                 value={formik.values.idDepartamento}                                                   
                                 >
-                        {selectDepartamentos.map(dep => <option key={dep.id} value={dep.id}>{dep.nombre}</option>)}
-                        
+                        {/* {selectDepartamentos.map(dep => <option key={dep.id} value={dep.id}>{dep.nombre}</option>)}
+                         */}
                     </Form.Select> 
                 </Row>
                 {idDepartamento !=0 && <Row className="justify-content-center mb-3" >                
