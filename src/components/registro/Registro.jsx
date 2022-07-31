@@ -7,9 +7,14 @@ import * as yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
 import { apiRegistro } from '../../services/ServiciosApi';
+import { useDispatch,useSelector } from 'react-redux';
+import { guardarDepartamentos } from '../../features/DepartamentosSlice';
+
 
 const Registro = () => {
-  
+
+    const dispatch = useDispatch();
+    
     const validationSchema = yup.object({
         usuario: yup
             .string('Ingrese su usuario')
@@ -20,7 +25,7 @@ const Registro = () => {
         idDepartamento: yup
             .number(0)
             .required('Seleccione un departamento ....'),        
-    });
+    });    
 
     const formik = useFormik({
         initialValues: {
@@ -34,15 +39,10 @@ const Registro = () => {
     });
 
     const registro = async (usuario) => {
-
-        try {
-            //console.log('usuario', usuario);
+        try {           
             const respuesta = await apiRegistro(usuario);
-            //console.log('respuesta', respuesta);
-            /* localStorage.setItem("usuario", JSON.stringify(usuario));
-            sessionStorage.setItem("DatosLog", JSON.stringify(respuesta));
-            const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
-            alert(dataLog.apiKey); */
+            alert("Redirigir a login o cartel de ya registrado");
+            //redirigir a login            
         } catch (error) {
             alert(error);
         }
@@ -53,12 +53,13 @@ const Registro = () => {
 
     const [idDepartamento, setIdDepartamento] = useState(0);    
 
-    const refCiudad = useRef(0);
-    //console.log(refCiudad);
+    const refCiudad = useRef(0);    
 
     const capturarIdDepartamento = (event) => {
         setIdDepartamento(event.currentTarget.value);   
-    }   
+    }
+    
+    //const departamentosMostrar = useSelector(state => state.departamentos.departamentos);
 
     useEffect(() => {
         fetch("https://crypto.develotion.com/departamentos.php")
