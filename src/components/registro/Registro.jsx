@@ -8,8 +8,6 @@ import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
 import { apiRegistro } from '../../services/ServiciosApi';
 
-/* import Option from './option/Option'; */
-
 const Registro = () => {
   
     const validationSchema = yup.object({
@@ -18,14 +16,18 @@ const Registro = () => {
             .required('El usuario no puede estar vacío.'),
         password: yup
             .string('Ingrese su contraseña')
-            .required('La contraseña no puede estar vacía.'),        
+            .required('La contraseña no puede estar vacía.'), 
+        idDepartamento: yup
+            .number(0)
+            .required('Seleccione un departamento ....'),        
     });
 
     const formik = useFormik({
         initialValues: {
             usuario: '',
-            password: '',
-            idDepartamento: 0,           
+            password: '', 
+            idDepartamento:0,
+            idCiudad:0                    
         },
         validationSchema: validationSchema,
         onSubmit: (values) => registro(values)
@@ -37,19 +39,14 @@ const Registro = () => {
             //console.log('usuario', usuario);
             const respuesta = await apiRegistro(usuario);
             //console.log('respuesta', respuesta);
-            localStorage.setItem("usuario", JSON.stringify(usuario));
+            /* localStorage.setItem("usuario", JSON.stringify(usuario));
             sessionStorage.setItem("DatosLog", JSON.stringify(respuesta));
             const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
-            alert(dataLog.apiKey);
+            alert(dataLog.apiKey); */
         } catch (error) {
             alert(error);
         }
-    }
-
-    const [datosUsuario, setDatosUsuario] = useState({
-        user: '',
-        password: '',        
-    })   
+    }  
 
     const [departamentos, setDepartamentos] = useState([]);
     const [ciudades, setCiudades] = useState([]);
@@ -57,9 +54,10 @@ const Registro = () => {
     const [idDepartamento, setIdDepartamento] = useState(0);    
 
     const refCiudad = useRef(0);
+    //console.log(refCiudad);
 
     const capturarIdDepartamento = (event) => {
-        setIdDepartamento(event.currentTarget.value)        
+        setIdDepartamento(event.currentTarget.value);   
     }   
 
     useEffect(() => {
@@ -84,8 +82,8 @@ const Registro = () => {
         if(refCiudad.current){
             //console.log('refCiudad', refCiudad.current.value)            
         }
-    })
- 
+    })    
+
     return (
         <Container className='align-content-center'>
             <Form className='formulario' onSubmit={formik.handleSubmit}>
@@ -160,20 +158,37 @@ const Registro = () => {
                     helperText={formik.touched.password && formik.errors.password}
                 />
                 </Row>
-                <Row className="justify-content-center mb-3">
-                    <Form.Select id="idDepartamento" className="w-50 m-2" onChange={capturarIdDepartamento} >
+                <Row className="justify-content-center mb-3"> 
+                   <Form.Select 
+                                id="idDepartamento" 
+                                name="idDepartamento"
+                                className="w-50 m-2" 
+                                onChange={formik.handleChange} 
+                                onClick={capturarIdDepartamento} 
+                                value={formik.values.idDepartamento}                                                   
+                                >
                         {selectDepartamentos.map(dep => <option key={dep.id} value={dep.id}>{dep.nombre}</option>)}
-                    </Form.Select>
+                        
+                    </Form.Select> 
                 </Row>
                 {idDepartamento !=0 && <Row className="justify-content-center mb-3" >                
-                    <Form.Select className="w-50 m-2" ref={refCiudad}>
-                        ciudades.lenght !=0? 
-                                            {ciudades.map(city => <option key={city.id} value={city.id}>{city.nombre}</option>)}
-                                            :<option key="0">Seleccione un departamento ...</option>                            
+                    <Form.Select
+                        id="idCiudad" 
+                        name="idCiudad" 
+                        className="w-50 m-2" 
+                        ref={refCiudad}
+                        onChange={formik.handleChange}
+                        value={formik.values.idCiudad}
+                    >
+                        <option key="0" value="0">Seleccione una Ciudad ...</option>  
+                        {ciudades.map(city => <option key={city.id} value={city.id}>{city.nombre}</option>)}
+                                                                       
                     </Form.Select>
                 </Row> }
                 <Row className="justify-content-center mb-3">
+                
                     <button
+                        disabled={!formik.values.password || !formik.values.usuario || formik.values.idDepartamento == 0 || formik.values.idCiudad == 0 }
                         type="submit"
                         className="btn btn-dark btn-block m-3 w-50"
                             >
