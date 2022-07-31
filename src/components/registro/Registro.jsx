@@ -20,7 +20,7 @@ const Registro = () => {
         idDepartamento: yup
             .number(0)
             .required('Seleccione un departamento ....'),        
-    });
+    });    
 
     const formik = useFormik({
         initialValues: {
