@@ -8,8 +8,7 @@ import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
 import { apiRegistro } from '../../services/ServiciosApi';
 import { useDispatch,useSelector } from 'react-redux';
-import { guardarDepartamentos } from '../../features/DepartamentosSlice';
-
+import { guardarDepartamentos } from '../../features/departamentos/DepartamentosSlice';
 
 const Registro = () => {
 

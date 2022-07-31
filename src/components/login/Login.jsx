@@ -7,6 +7,7 @@ import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
 import Transacciones from '../dashboard/transacciones/Transacciones'
 
+
 const Login = () => {
 
     const validationSchema = yup.object({
@@ -115,8 +116,7 @@ const Login = () => {
                                     id="password"
                                     type="password"
                                     name="password"
-                                    label="Contraseña"
-                                    type="password"
+                                    label="Contraseña"                                    
                                     value={formik.values.password}
                                     onChange={formik.handleChange}
                                     error={formik.touched.password && Boolean(formik.errors.password)}
