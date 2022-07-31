@@ -14,7 +14,7 @@ const App = () => {
     <div className="App">
       <Provider store={store}>
         <Login />
-        <Registro />
+        {/* <Registro /> */}
         <Dashboard />
       </Provider>
     </div>

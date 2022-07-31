@@ -2,7 +2,7 @@ import React from 'react'
 import {useEffect} from 'react'
 import {useDispatch,useSelector} from 'react-redux'
 import {guardarTransacciones} from '../../../features/transacciones/TransaccionesSlice'
-
+import Table from 'react-bootstrap/Table';
 
 
 const Transacciones = () => {
@@ -21,26 +21,58 @@ const Transacciones = () => {
     if(dataLog != null){
         headers["apikey"] =`${dataLog.apiKey}`
     } 
-    console.log(dataLog.apiiKey)
+   
     useEffect(() => {
         fetch(`https://crypto.develotion.com/transacciones.php?idUsuario=${dataLog.id}`,{headers})
             .then(r => r.json())
             .then(datos => {
-                  dispatch(guardarTransacciones(datos))      
+
+                switch (datos.codigo) {
+                    case 200:
+                        dispatch(guardarTransacciones(datos))  
+                        break;              
+                    default:
+                        break;
+                }
+                      
                   console.log(datos)       
             })
     },[]);
 
+    if(transacciones.length !== 0){
+        return (
+            <div>Transacciones
 
-  return (
-    <div>Transacciones
-         {/* {transacciones.transacciones.map(tran => <p key={tran.id}>{tran.id}</p>  ) }   */}
-         
-        
-
-        
-    </div>
-  )
+        <Table striped bordered hover>
+            <thead>
+                <tr>
+                <th>N° Transaccion</th>
+                <th>Moneda</th>
+                <th>Tipo de Operacion</th>
+                <th>Cantidad</th>
+                <th>Valor Moneda</th>
+                </tr>
+            </thead>
+            <tbody>
+            {transacciones.transacciones.map( (tran,index) => {
+                return (
+                    <tr key= {index}>
+                    <td>{tran.id}</td>
+                    <td>{tran.moneda}</td>
+                    <td>{tran.tipo_operacion}</td>
+                    <td>{tran.cantidad}</td>
+                    <td>{tran.valor_actual}</td>
+                    </tr>    
+                )    
+            })}      
+            </tbody>
+            </Table>
+            
+            </div>
+        )
+    } else {
+        <div> Transacciones</div>
+    }
 }
 
 export default Transacciones
