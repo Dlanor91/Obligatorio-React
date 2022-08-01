@@ -97,7 +97,7 @@ const Registro = () => {
     }, [idDepartamento])
 
     return (
-        <Container className='align-content-center'>
+        <Container className='align-content-center container'>
             <Form className='formulario' onSubmit={formik.handleSubmit}>
                 <h2 className='formulario-titulo py-2'>Registro</h2>
                 <Row className="justify-content-center py-1 mb-3">
