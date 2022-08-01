@@ -17,6 +17,7 @@ const App = () => {
     <div className="App">
       <Provider store={store}>
         {/* <Login /> */}
+         <Registro />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Dashboard />}></Route>
