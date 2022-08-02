@@ -1,7 +1,8 @@
 import React from 'react'
-import {useEffect} from 'react'
-import {useDispatch,useSelector} from 'react-redux'
-import {crearTransaccion} from '../../../features/transacciones/TransaccionesSlice'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { crearTransaccion } from '../../../features/transacciones/TransaccionesSlice'
+import "./IngresarTransaccion.css"
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
@@ -9,14 +10,25 @@ import Row from '@mui/material/TextField'
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import { ApiTransaccion } from "../../../services/ServiciosApi";
-
+import Moneda from '../monedas/Monedas'
 
 const IngresarTransaccion = () => {
 
     const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
-    const monedas= useSelector(state => state.monedas.monedas)
-    
-    console.log(monedas)
+    const monedas = useSelector(state => state.monedas.monedas)
+    const [idMoneda, setIdMoneda] = useState(0);
+    const [moneda, setMoneda] = useState({})
+    let valorMoneda = 0;
+
+    useEffect(() => {
+
+        setMoneda(monedas.monedas?.find(mon => mon.id === idMoneda));
+
+    }, [idMoneda])
+
+    console.log(idMoneda)
+
+    console.log(moneda)
 
     const validationSchema = yup.object({
         usuario: yup
@@ -39,99 +51,197 @@ const IngresarTransaccion = () => {
         onSubmit: (values) => AgregarTransaccion(values)
     });
 
+    const capturarIdMoneda = (event) => {
+        setIdMoneda(event.currentTarget.value);
+    }
+
     const AgregarTransaccion = async (transaccion) => {
         try {
-            const respuesta= await ApiTransaccion(transaccion);
+            const respuesta = await ApiTransaccion(transaccion);
         } catch (error) {
             alert(error);
-        }          
+        }
     }
-    if(monedas.length !== 0){
+    if (monedas.length !== 0) {
         return (
-          
 
-    <Container className='align-content-center'>
+            <div className="container">
+                <div className="d-flex justify-content-center h-100">
+                    <div className="card align-items-center">
+                        <div className="card-header">
+                            <h1 text="Bienvenido" />
+                        </div>
 
-            <Form className='formulario' onSubmit={formik.handleSubmit}>
+                        <div className="card-body">
+                            <form onSubmit={formik.handleSubmit}>
+                                <div className="form-group m-3">
+                                    <Form.Select
+                                        fullWidth
+                                        sx={{
+                                            input: {
+                                                color: "white",
+                                                backgroundColor: "grey",
 
-                <h2 className='formulario-titulo py-2'>Transacciones</h2>
+                                            },
+                                            label: {
+                                                color: "white",
+                                                borderColor: "white",
+                                            },
+                                            fieldset: {
+                                                color: "white"
+                                            },
+                                            "& .MuiOutlinedInput-root": {
+                                                "& fieldset": {
+                                                    borderColor: "white"
+                                                },
+                                                "&.Mui-focused fieldset": {
+                                                    borderColor: "yellow"
+                                                }
+                                            },
+                                            "& label.Mui-focused": {
+                                                color: "yellow"
+                                            }
+                                        }}
+                                        id="usuario"
+                                        name="usuario"
+                                        label="Usuario"
+                                        value={formik.values.usuario}
+                                        onChange={formik.handleChange}
+                                        error={formik.touched.usuario && Boolean(formik.errors.usuario)}
+                                        helperText={formik.touched.usuario && formik.errors.usuario}>
 
-                <Row className="justify-content-center mb-3"> 
-                    <Form.Select 
-                                id="tipoDeOperacion" 
-                                name="tipoDeOperacion"
-                                className="w-50 m-2" 
-                                onChange={formik.handleChange} 
-                                value={formik.values.tipoDeOperacion}                                                   
-                    >  
-                        <option key="0" value="0">Seleccione un Departamento ...</option> 
-                        <option key="1" value={1}> Compra</option>
-                        <option key="2" value={2}> Venta</option>
-                    </Form.Select>
-                </Row>
+                                        <option key="0" value="0">Seleccione tipo de transaccion ...</option>
+                                        <option key="1" value="1">Compra</option>
+                                        <option key="2" value="2">Venta</option>
+                                    </Form.Select>
+                                </div>
 
-                <Row className="justify-content-center mb-3" >                
-                    <Form.Select
-                        id="idCiudad" 
-                        name="idCiudad" 
-                        className="w-50 m-2" 
-                        onChange={formik.handleChange}
-                        value={formik.values.moneda}
-                    >
-                        <option key="0" value="0">Seleccione una Ciudad ...</option>  
-                         {monedas.monedas.map(mon => <option key={mon.id} value={mon.id}>{mon.nombre}</option>)}
-                                                                 
-                    </Form.Select>
-                </Row> 
+                                <div className="form-group m-3">
+                                    <Form.Select
+                                        fullWidth
+                                        sx={{
+                                            input: {
+                                                color: "white",
+                                                backgroundColor: "grey"
+                                            },
+                                            Label: {
+                                                color: "white"
+                                            },
+                                            "& .MuiOutlinedInput-root": {
+                                                "& fieldset": {
+                                                    borderColor: "white"
+                                                }, "&.Mui-focused fieldset": {
+                                                    borderColor: "yellow"
+                                                }
+                                            },
+                                            "& label.Mui-focused": {
+                                                color: "yellow"
+                                            }
+                                        }}
+                                        id="password"
+                                        type="password"
+                                        name="password"
+                                        label="Contraseña"
+                                        onClick={capturarIdMoneda}
+                                        onChange={formik.handleChange}
+                                        error={formik.touched.password && Boolean(formik.errors.password)}
+                                        helperText={formik.touched.password && formik.errors.password}
+                                    >
+                                        <option key="0" value="0">Seleccione una moneda ...</option>
+                                        {monedas.monedas?.map(mon => <option key={mon.id} value={mon.id}>{mon.nombre}</option>)}
+                                    </Form.Select>
+                                </div>
 
-                <Row className="justify-content-center mb-3">
-                <TextField
-                    fullWidth
-                    className="w-50"
-                    sx={{
-                        input: {
-                            color: "white",
-                            backgroundColor: "grey"
-                        },
-                        Label: {
-                            color: "white"
-                        },
-                        "& .MuiOutlinedInput-root": {
-                            "& fieldset": {
-                                borderColor: "white"
-                            }, "&.Mui-focused fieldset": {
-                                borderColor: "yellow"
-                            }
-                        },
-                        "& label.Mui-focused": {
-                            color: "yellow"
-                        }
-                    }}
-                    id="cantidad"
-                    name="cantidad"
-                    label="Cantidad"
-                    type="number"
-                    value={formik.values.cantidad}
-                    onChange={formik.handleChange}
-                    error={formik.touched.cantidad && Boolean(formik.errors.password)}
-                    helperText={formik.touched.cantidad && formik.errors.cantidad}
-                />
-                </Row>
+                                <div className="form-group m-3">
+                                    <TextField
+                                        fullWidth
+                                        sx={{
+                                            input: {
+                                                color: "white",
+                                                backgroundColor: "grey"
+                                            },
+                                            Label: {
+                                                color: "white"
+                                            },
+                                            "& .MuiOutlinedInput-root": {
+                                                "& fieldset": {
+                                                    borderColor: "white"
+                                                }, "&.Mui-focused fieldset": {
+                                                    borderColor: "yellow"
+                                                }
+                                            },
+                                            "& label.Mui-focused": {
+                                                color: "yellow"
+                                            }
+                                        }}
+                                        id="cantidad"
+                                        type="number"
+                                        name="cantidad"
+                                        label="Cantidad"
+                                        error={formik.touched.password && Boolean(formik.errors.password)}
+                                        helperText={formik.touched.password && formik.errors.password}
+                                    />
+                                </div>
 
-                <Row className="justify-content-center mb-3">
-                
-                    <button
-                        disabled={!formik.values.password || !formik.values.usuario || formik.values.idDepartamento == 0 || formik.values.idCiudad == 0 }
-                        type="submit"
-                        className="btn btn-dark btn-block m-3 w-50"
-                            >
-                                Registrarse{" "}
-                            </button>
-                </Row>                               
-            </Form>
-        </Container>                          
-    ) } else 
-    {
+                                <div className="form-group m-3">
+                                    <TextField
+                                        fullWidth
+                                        sx={{
+                                            input: {
+                                                color: "white",
+                                                backgroundColor: "grey"
+                                            },
+                                            Label: {
+                                                color: "white"
+                                            },
+                                            "& .MuiOutlinedInput-root": {
+                                                "& fieldset": {
+                                                    borderColor: "white"
+                                                }, "&.Mui-focused fieldset": {
+                                                    borderColor: "yellow"
+                                                }
+                                            },
+                                            "& label.Mui-focused": {
+                                                color: "yellow"
+                                            }
+                                        }}
+                                        id="cotizacionActual"
+                                        type="number"
+                                        name="cotizacionActual"
+                                        value={valorMoneda}
+                                        onChange={formik.handleChange}
+                                        error={formik.touched.password && Boolean(formik.errors.password)}
+                                        helperText={formik.touched.password && formik.errors.password}
+                                    />
+                                </div>
+
+                                <div className="form-group mt-3">
+                                    <button
+                                        disabled={!formik.values.password || !formik.values.usuario}
+                                        type="submit"
+                                        className="btn btn-dark btn-block m-3"
+                                    >
+                                        Ingresar{" "}
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div className="card-footer ">
+                            <div className="text-center">
+                                <span>No tienes cuenta?{" "}
+                                    <a id="registro" href="#!">
+                                        Create una!
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    } else {
         return <div> No hay conexion</div>
     }
 }
