@@ -16,17 +16,18 @@ import { Link } from "react-router-dom";
 const App = () => {
   return (
     <div className="App">
-
       <Provider store={store}>
-      {/* <Monedas />
-      <IngresarTransaccion /> */}
         <BrowserRouter>
           <Routes>
             <Route path="/Login" element={<Login />} />
             <Route path="/Registro" element={<Registro />} />
             <Route path="/" element={<Dashboard />}>
               <Route index element={<Transacciones />} />
-              <Route path="Monedas" element={<Monedas />} />
+              <Route path="/Monedas" element={<Monedas />} />
+              <Route
+                path="/IngresarTransaccion"
+                element={<IngresarTransaccion />}
+              />
             </Route>
             <Route
               path="*"
