@@ -9,10 +9,10 @@ const Transacciones = () => {
 
     const usuario = localStorage.getItem("usuario");
     const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
-    const dispatch = useDispatch();
+    const dispatch = useDispatch();   
     const transacciones = useSelector(state => state.transacciones.transacciones);
     const monedas = useSelector(state => state.monedas.monedas);
-    
+
     let headers = {
         "Content-Type": "application/json"
     }
@@ -43,9 +43,9 @@ const Transacciones = () => {
                 <Table striped bordered hover variant="light">
                     <thead>
                         <tr>
-                            <th>N° Transaccion</th>
+                            <th>N° Transacción</th>
                             <th>Moneda</th>
-                            <th>Tipo de Operacion</th>
+                            <th>Tipo de Operación</th>
                             <th>Cantidad</th>
                             <th>Valor Moneda</th>
                         </tr>
@@ -56,8 +56,8 @@ const Transacciones = () => {
                             return (                                
                                 <tr key={index}>
                                     <td>{tran.id}</td>
-                                    <td>{tran.moneda}</td>
-                                    <td>{tran.tipo_operacion}</td>
+                                    <td>{tran.moneda}</td>                                    
+                                    <td>{(tran.tipo_operacion == 1)? "Compra": "Venta"}</td>
                                     <td>{tran.cantidad}</td>
                                     <td>{tran.valor_actual}</td>
                                 </tr>
