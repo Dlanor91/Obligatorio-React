@@ -63,10 +63,9 @@ export const apiRegistro = async ({ usuario, password, idDepartamento, idCiudad 
             switch (result.codigo) {
                 case 200:
                     return Promise.resolve(result);
-                case 409:
-                    return alert("Usuario ya registrado. Intentelo nuevamente.");
+                
                 default:
-                    return Promise.resolve(result);
+                    return Promise.reject(result);
             }
         })
         .catch((error) => Promise.reject(error.mensaje ? error.mensaje : "Ah ocurrido un error, vuelva a intentarlo mas tarde"));
