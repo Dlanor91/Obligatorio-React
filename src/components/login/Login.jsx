@@ -5,11 +5,10 @@ import { apiLogin } from "../../services/ServiciosApi";
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
-import Transacciones from '../dashboard/transacciones/Transacciones'
-
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-
+    const navigate = useNavigate();
     const validationSchema = yup.object({
         usuario: yup
             .string('Ingrese su usuario')
@@ -37,7 +36,7 @@ const Login = () => {
             localStorage.setItem("usuario", JSON.stringify(usuario));
             sessionStorage.setItem("DatosLog", JSON.stringify(respuesta));
             const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
-            alert(dataLog.apiKey);
+            navigate("/");
         } catch (error) {
             alert(error);
         }
@@ -133,20 +132,17 @@ const Login = () => {
                                 >
                                     Ingresar{" "}
                                 </button>
+                                <button                                    
+                                    type="submit"
+                                    className="btn btn-dark btn-block m-3"
+                                    onClick={() => navigate("/Registro")}
+                                >
+                                    Registrarse{" "}
+                                </button>
                             </div>
 
-                        </form>
-                    </div>
-
-                    <div className="card-footer ">
-                        <div className="text-center">
-                            <span>No tienes cuenta?{" "}
-                                <a id="registro" href="#!">
-                                    Create una!
-                                </a>
-                            </span>
-                        </div>
-                    </div>
+                        </form>                    
+                    </div>                    
                 </div>
             </div>
         </div>

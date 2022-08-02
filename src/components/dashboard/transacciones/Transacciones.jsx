@@ -41,9 +41,9 @@ const Transacciones = () => {
 
     if (transacciones.length !== 0) {
         return (
-            <div>Transacciones
-
-                <Table striped bordered hover>
+            <div className='px-2'>
+                <h2 className='mt-2'>Transacciones</h2>
+                <Table striped bordered hover variant="light">
                     <thead>
                         <tr>
                             <th>N° Transaccion</th>

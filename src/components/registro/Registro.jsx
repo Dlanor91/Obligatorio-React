@@ -10,9 +10,11 @@ import { apiRegistro } from '../../services/ServiciosApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { guardarCiudades } from '../../features/ciudades/CiudadesSlice';
 import { guardarDepartamentos } from '../../features/departamentos/DepartamentosSlice'
+import { useNavigate } from 'react-router-dom';
 
 const Registro = () => {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const mostrarDepartamentos = useSelector((state) => state.departamentos.departamentos);
@@ -48,8 +50,7 @@ const Registro = () => {
     const registro = async (usuario) => {
         try {
             const respuesta = await apiRegistro(usuario);
-            alert("Redirigir a login o cartel de ya registrado");
-            //redirigir a login            
+            navigate("/Login");          
         } catch (error) {
             alert(error);
         }
@@ -170,7 +171,7 @@ const Registro = () => {
                         helperText={formik.touched.password && formik.errors.password}
                     />
                 </Row>
-                <Row className="justify-content-center mb-3">
+                <Row className="justify-content-center mb-2">
                     <Form.Select
                         id="idDepartamento"
                         name="idDepartamento"
@@ -183,7 +184,7 @@ const Registro = () => {
                         {mostrarDepartamentos.departamentos?.map(dep => <option key={dep.id} value={dep.id}>{dep.nombre}</option>)}
                     </Form.Select>
                 </Row>
-                {idDepartamento !== 0 && <Row className="justify-content-center mb-3" >
+                {idDepartamento !== 0 && <Row className="justify-content-center mb-2" >
                     <Form.Select
                         id="idCiudad"
                         name="idCiudad"
@@ -202,9 +203,16 @@ const Registro = () => {
                     <button
                         disabled={!formik.values.password || !formik.values.usuario || formik.values.idDepartamento == 0 || formik.values.idCiudad == 0}
                         type="submit"
-                        className="btn btn-dark btn-block m-3 w-50"
+                        className="btn btn-dark btn-block px-2 w-25"
                     >
                         Registrarse{" "}
+                    </button>
+                    <button                                    
+                                    type="submit"
+                                    className="btn btn-dark btn-block px-2 mx-2 w-25"
+                                    onClick={() => navigate("/Login")}
+                                >
+                                    Ingresar{" "}
                     </button>
                 </Row>
             </Form>
