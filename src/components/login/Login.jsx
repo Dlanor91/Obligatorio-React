@@ -6,6 +6,9 @@ import * as yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
 import { Link, useNavigate } from "react-router-dom";
+import Monedas from "../dashboard/monedas/Monedas";
+import Transacciones from "../dashboard/transacciones/Transacciones";
+import { useSelector } from "react-redux";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -36,6 +39,8 @@ const Login = () => {
             localStorage.setItem("usuario", JSON.stringify(usuario));
             sessionStorage.setItem("DatosLog", JSON.stringify(respuesta));
             const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
+            
+            
             navigate("/");
         } catch (error) {
             alert(error);
@@ -49,7 +54,7 @@ const Login = () => {
                     <div className="card-header">
                         <Titulo text="Bienvenido" />
                     </div>
-
+                    
                     <div className="card-body">
                         <form onSubmit={formik.handleSubmit}>
                             <div className="form-group m-3">
