@@ -15,13 +15,17 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 const App = () => {
   return (
     <div className="App">
+
       <Provider store={store}>
+      {/* <Monedas />
+      <IngresarTransaccion /> */}
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Dashboard />}></Route>
             <Route path="Login" element={<Login />} />
             <Route path="Registro" element={<Registro />} />
             <Route path="Transacciones" element={<Transacciones />} />
+            <Route path="CargaTransaccion" element={<IngresarTransaccion />} />
             <Route path="Monedas" element={<Monedas />} />
             <Route path="*" element={<Navigate replace to="/" />} />
           </Routes>
