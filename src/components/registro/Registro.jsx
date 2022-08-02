@@ -50,12 +50,11 @@ const Registro = () => {
     const registro = async (usuario) => {
         try {            
             const respuesta = await apiRegistro(usuario);
+            
             if(respuesta != undefined){
+                alert("Usuario registrado correctamente.")
                 navigate("/Login"); 
-            }
-            else{
-                
-            }
+            }            
                      
         } catch (error) {
             alert(error);

@@ -10,7 +10,8 @@ const Transacciones = () => {
     const usuario = localStorage.getItem("usuario");
     const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
     const dispatch = useDispatch();
-    const transacciones = useSelector(state => state.transacciones.transacciones)
+    const transacciones = useSelector(state => state.transacciones.transacciones);
+    const monedas = useSelector(state => state.monedas.monedas);
     
     let headers = {
         "Content-Type": "application/json"
@@ -19,7 +20,7 @@ const Transacciones = () => {
     if (dataLog != null) {
         headers["apikey"] = `${dataLog.apiKey}`
     }
-
+   
     useEffect(() => {
         fetch(`https://crypto.develotion.com/transacciones.php?idUsuario=${dataLog.id}`, { headers })
             .then(r => r.json())
@@ -50,8 +51,9 @@ const Transacciones = () => {
                         </tr>
                     </thead>
                     <tbody>
+                    
                         {transacciones.transacciones.map((tran, index) => {
-                            return (
+                            return (                                
                                 <tr key={index}>
                                     <td>{tran.id}</td>
                                     <td>{tran.moneda}</td>

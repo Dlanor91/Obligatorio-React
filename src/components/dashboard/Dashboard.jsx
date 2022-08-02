@@ -21,9 +21,9 @@ const Dashboard = () => {
                <Navbar.Toggle aria-controls="basic-navbar-nav" />
                <Navbar.Collapse id="basic-navbar-nav">
                  <Nav className="me-auto">                  
-                   <Nav.Link as={Link} to="/">Transacciones</Nav.Link>  
-                   <Nav.Link as={Link} to="/Monedas">Monedas</Nav.Link>  
-                   <Nav.Link as={Link} to="/IngresarTransaccion">Ingresar Transacción</Nav.Link>  
+                   <Nav.Link as={Link} to="/">Transacciones</Nav.Link>
+                   <Nav.Link as={Link} to="/IngresarTransaccion">Ingresar Transacción</Nav.Link>    
+                   <Nav.Link as={Link} to="/Monedas">Monedas</Nav.Link>                  
                    <Nav.Link as={Link} to="/CerrarSesion">Cerrar Sesión</Nav.Link>         
                  </Nav>
                </Navbar.Collapse>

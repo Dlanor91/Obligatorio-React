@@ -24,11 +24,12 @@ const App = () => {
             <Route path="/Registro" element={<Registro />} />
             <Route path="/" element={<Dashboard />}>
               <Route index element={<Transacciones />} />
-              <Route path="/Monedas" element={<Monedas />} />
               <Route
                 path="/IngresarTransaccion"
                 element={<IngresarTransaccion />}
               />
+              <Route path="/Monedas" element={<Monedas />} />
+
               <Route path="/CerrarSesion" element={<CerrarSesion />} />
             </Route>
 
