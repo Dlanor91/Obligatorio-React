@@ -48,9 +48,15 @@ const Registro = () => {
     });
 
     const registro = async (usuario) => {
-        try {
+        try {            
             const respuesta = await apiRegistro(usuario);
-            navigate("/Login");          
+            if(respuesta != undefined){
+                navigate("/Login"); 
+            }
+            else{
+                
+            }
+                     
         } catch (error) {
             alert(error);
         }
@@ -71,7 +77,7 @@ const Registro = () => {
                         dispatch(guardarDepartamentos(datos))
                         break;
                     default:
-                        alert("No se obtuvo una respuesta correcta");
+                        alert("No se obtuvo una respuesta correcta.");
                         break;
                 }
             })
@@ -89,7 +95,7 @@ const Registro = () => {
                         dispatch(guardarCiudades(datos))
                         break;
                     default:
-                        alert("No se obtuvo una respuesta correcta");
+                        alert("No se obtuvo una respuesta correcta.");
                         break;
                 }
             })
@@ -99,7 +105,7 @@ const Registro = () => {
 
     return (
         <Container className='align-content-center container'>
-            <Form className='formulario' onSubmit={formik.handleSubmit}>
+            <Form className='formulario' onSubmit={formik.handleSubmit} >
                 <h2 className='formulario-titulo py-2'>Registro</h2>
                 <Row className="justify-content-center py-1 mb-3">
                     <TextField
@@ -203,13 +209,13 @@ const Registro = () => {
                     <button
                         disabled={!formik.values.password || !formik.values.usuario || formik.values.idDepartamento == 0 || formik.values.idCiudad == 0}
                         type="submit"
-                        className="btn btn-dark btn-block px-2 w-25"
+                        className="btn btn-dark btn-block px-1 mx-0 w-25"
                     >
                         Registrarse{" "}
                     </button>
                     <button                                    
                                     type="submit"
-                                    className="btn btn-dark btn-block px-2 mx-2 w-25"
+                                    className="btn btn-dark btn-block mx-2 w-25"
                                     onClick={() => navigate("/Login")}
                                 >
                                     Ingresar{" "}

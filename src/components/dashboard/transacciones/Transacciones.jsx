@@ -11,9 +11,7 @@ const Transacciones = () => {
     const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
     const dispatch = useDispatch();
     const transacciones = useSelector(state => state.transacciones.transacciones)
-
-    console.log(transacciones)
-
+    
     let headers = {
         "Content-Type": "application/json"
     }

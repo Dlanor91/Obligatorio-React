@@ -12,6 +12,7 @@ import Monedas from "./components/dashboard/monedas/Monedas";
 import Dashboard from "./components/dashboard/Dashboard";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import CerrarSesion from "./components/dashboard/cerrarSesion/CerrarSesion";
 
 const App = () => {
   return (
@@ -28,7 +29,9 @@ const App = () => {
                 path="/IngresarTransaccion"
                 element={<IngresarTransaccion />}
               />
+              <Route path="/CerrarSesion" element={<CerrarSesion />} />
             </Route>
+
             <Route
               path="*"
               element={

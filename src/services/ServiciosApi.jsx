@@ -46,8 +46,8 @@ export const apiRegistro = async ({ usuario, password, idDepartamento, idCiudad 
     let raw = JSON.stringify({
         usuario: usuario,
         password: password,
-        idDepartamento,
-        idCiudad
+        idDepartamento: idDepartamento,
+        idCiudad: idCiudad 
     });
 
     let requestOptions = {
@@ -63,7 +63,8 @@ export const apiRegistro = async ({ usuario, password, idDepartamento, idCiudad 
             switch (result.codigo) {
                 case 200:
                     return Promise.resolve(result);
-
+                case 409:
+                    return alert("Usuario ya registrado. Intentelo nuevamente.");
                 default:
                     return Promise.resolve(result);
             }

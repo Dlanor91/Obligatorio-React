@@ -17,8 +17,7 @@ html,body{
     align-content: center;
 }
 
-.card{
-    height: 370px;
+.card{    
     margin-top:auto ;
     margin-bottom: auto;
     width: 400px;
@@ -28,8 +27,7 @@ html,body{
 
 .card-header {
     background-color: rgba(0,0,0,0.5) !important;
-    width: 400px;
-    height: 370px;
+    width: 400px;    
     color:white;
 }
 
