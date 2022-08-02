@@ -65,7 +65,7 @@ const IngresarTransaccion = () => {
     if (monedas.length !== 0) {
         return (
 
-            <div className="container">
+            <div className="container mt-5">
                 <div className="d-flex justify-content-center h-100">
                     <div className="card align-items-center">
                         <div className="card-header">
@@ -215,7 +215,7 @@ const IngresarTransaccion = () => {
                                     />
                                 </div>
 
-                                <div className="form-group mt-3">
+                                <div className="form-group my-3">
                                     <button
                                         disabled={!formik.values.password || !formik.values.usuario}
                                         type="submit"
@@ -226,16 +226,6 @@ const IngresarTransaccion = () => {
                                 </div>
 
                             </form>
-                        </div>
-
-                        <div className="card-footer ">
-                            <div className="text-center">
-                                <span>No tienes cuenta?{" "}
-                                    <a id="registro" href="#!">
-                                        Create una!
-                                    </a>
-                                </span>
-                            </div>
                         </div>
                     </div>
                 </div>
