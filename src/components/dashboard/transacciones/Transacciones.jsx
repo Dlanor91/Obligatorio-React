@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { guardarTransacciones } from '../../../features/transacciones/TransaccionesSlice'
 import Table from 'react-bootstrap/Table';
-
+import Monedas from '../../../components/dashboard/monedas/Monedas'
 
 const Transacciones = () => {
 
@@ -34,8 +34,6 @@ const Transacciones = () => {
                     default:
                         break;
                 }
-
-                console.log(datos)
             })
     }, []);
 
