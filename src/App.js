@@ -11,6 +11,7 @@ import IngresarTransaccion from "./components/dashboard/transacciones/IngresarTr
 import Monedas from "./components/dashboard/monedas/Monedas";
 import Dashboard from "./components/dashboard/Dashboard";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const App = () => {
   return (
@@ -21,22 +22,22 @@ const App = () => {
       <IngresarTransaccion /> */}
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Dashboard />}></Route>
-            <Route path="Login" element={<Login />} />
-            <Route path="Registro" element={<Registro />} />
-            <Route path="Transacciones" element={<Transacciones />} />
-            <Route path="CargaTransaccion" element={<IngresarTransaccion />} />
-            <Route path="Monedas" element={<Monedas />} />
-            <Route path="*" element={<Navigate replace to="/" />} />
+            <Route path="/Login" element={<Login />} />
+            <Route path="/Registro" element={<Registro />} />
+            <Route path="/" element={<Dashboard />}>
+              <Route index element={<Transacciones />} />
+              <Route path="Monedas" element={<Monedas />} />
+            </Route>
+            <Route
+              path="*"
+              element={
+                <h3 className="mt-5 ">
+                  Página no encontrada! Ir a <Link to="/Login">Login</Link>
+                </h3>
+              }
+            />
           </Routes>
         </BrowserRouter>
-        {/* <Routes>
-            <Route path="/" element={Dashboard}></Route> */}
-        {/* <Login /> */}
-        {/* <Registro /> */}
-        {/* <Dashboard /> */}
-        {/* </Routes>
-        </BrowserRouter> */}
       </Provider>
     </div>
   );
