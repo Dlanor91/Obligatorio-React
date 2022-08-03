@@ -1,8 +1,8 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { guardarTransacciones } from '../../../features/transacciones/TransaccionesSlice'
 import Table from 'react-bootstrap/Table';
+import MontoFinal from '../montoTotal/MontoFinal';
 
 const Transacciones = () => {
   
@@ -18,6 +18,7 @@ const Transacciones = () => {
         return (
             <div className='px-2'>
                 <h2 className='mt-2'>Transacciones</h2>
+                <MontoFinal/>
                 <Table striped bordered hover variant="light">
                     <thead>
                         <tr>
@@ -33,8 +34,7 @@ const Transacciones = () => {
                         {transacciones.transacciones.map((tran, index) => {
                             return (                                
                                 <tr key={index}>
-                                    <td>{tran.id}</td>
-                                    {/* <td>{tran.moneda}</td>  */} 
+                                    <td>{tran.id}</td>                                    
                                     <td>{traerMoneda(tran.moneda)}</td>                                 
                                     <td>{(tran.tipo_operacion == 1)? "Compra": "Venta"}</td>
                                     <td>{tran.cantidad}</td>
