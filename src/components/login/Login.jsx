@@ -1,16 +1,18 @@
 import React from "react";
 import Titulo from "./titulo/Titulo";
 import "./Login.css";
-import { apiLogin } from "../../services/ServiciosApi";
+import { apiLogin, apiMonedas } from "../../services/ServiciosApi";
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
 import { Link, useNavigate } from "react-router-dom";
 import Monedas from "../dashboard/monedas/Monedas";
 import Transacciones from "../dashboard/transacciones/Transacciones";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { guardarMonedas } from "../../features/monedas/MonedasSlice";
 
 const Login = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const validationSchema = yup.object({
         usuario: yup
@@ -34,13 +36,13 @@ const Login = () => {
 
         try {
             //console.log('usuario', usuario);
-            const respuesta = await apiLogin(usuario);
+            const respuesta = await apiLogin(usuario);            
             //console.log('respuesta', respuesta);
             localStorage.setItem("usuario", JSON.stringify(usuario));
             sessionStorage.setItem("DatosLog", JSON.stringify(respuesta));
             const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
-            
-            
+            const monedas = await apiMonedas();
+            dispatch(guardarMonedas(monedas))           
             navigate("/");
         } catch (error) {
             alert(error);

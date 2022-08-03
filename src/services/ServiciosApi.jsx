@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux'
+import { guardarMonedas } from '../features/monedas/MonedasSlice';
 import { crearTransaccion } from '../features/transacciones/TransaccionesSlice'
 
 
@@ -75,6 +76,7 @@ export const ApiTransaccion = async ({ idUsuario, tipoDeOperacion, moneda, canti
     console.log(idUsuario, tipoDeOperacion, moneda, cantidad, valorActual, "TRANSACCION API");
 
     const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
+    
     const dispatch = useDispatch();
 
     let headers = {
@@ -110,7 +112,34 @@ export const ApiTransaccion = async ({ idUsuario, tipoDeOperacion, moneda, canti
                     return Promise.resolve(result);
 
                 default:
+                    return Promise.reject(result);
+            }
+        })
+        .catch((error) => Promise.reject(error.mensaje ? error.mensaje : "Ah ocurrido un error, vuelva a intentarlo mas tarde"));
+}
+
+export const apiMonedas= async () => {
+    console.log("Hola")
+    const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));    
+
+    let headers = {
+        "Content-Type": "application/json"
+    }
+
+    if (dataLog != null) {
+        headers["apikey"] = `${dataLog.apiKey}`
+    }
+
+    return fetch(`${apiURL}/monedas.php`, { headers })
+        .then((response) => response.json())
+        .then((result) => {
+
+            switch (result.codigo) {
+                case 200:
                     return Promise.resolve(result);
+
+                default:
+                    return Promise.reject(result);
             }
         })
         .catch((error) => Promise.reject(error.mensaje ? error.mensaje : "Ah ocurrido un error, vuelva a intentarlo mas tarde"));

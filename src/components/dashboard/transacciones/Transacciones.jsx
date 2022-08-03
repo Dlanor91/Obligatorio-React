@@ -3,15 +3,19 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { guardarTransacciones } from '../../../features/transacciones/TransaccionesSlice'
 import Table from 'react-bootstrap/Table';
-import Monedas from '../../../components/dashboard/monedas/Monedas'
 
 const Transacciones = () => {
 
     const usuario = localStorage.getItem("usuario");
     const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
     const dispatch = useDispatch();   
-    const transacciones = useSelector(state => state.transacciones.transacciones);
-    const monedas = useSelector(state => state.monedas.monedas);
+    const transacciones = useSelector(state => state.transacciones.transacciones);    
+    const monedas = useSelector(state => state.monedas.monedas)
+
+    const traerMoneda =(id)=>{ 
+        const mon = monedas.monedas.find(m=> m.id == id);
+        return mon.nombre;        
+    }
 
     let headers = {
         "Content-Type": "application/json"
@@ -56,7 +60,8 @@ const Transacciones = () => {
                             return (                                
                                 <tr key={index}>
                                     <td>{tran.id}</td>
-                                    <td>{tran.moneda}</td>                                    
+                                    {/* <td>{tran.moneda}</td>  */} 
+                                    <td>{traerMoneda(tran.moneda)}</td>                                 
                                     <td>{(tran.tipo_operacion == 1)? "Compra": "Venta"}</td>
                                     <td>{tran.cantidad}</td>
                                     <td>{tran.valor_actual}</td>
