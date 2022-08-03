@@ -43,9 +43,10 @@ const Login = () => {
             sessionStorage.setItem("DatosLog", JSON.stringify(respuesta));
             const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
             const monedas = await apiMonedas();
-            dispatch(guardarMonedas(monedas))  
+            dispatch(guardarMonedas(monedas))
             const mostrarTransaccion = await apiMostrarTransaccion();
-            dispatch(guardarTransacciones(mostrarTransaccion))          
+            dispatch(guardarTransacciones(mostrarTransaccion)) 
+                      
             navigate("/");
         } catch (error) {
             alert(error);
