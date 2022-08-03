@@ -17,18 +17,11 @@ const IngresarTransaccion = () => {
     const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
     const monedas = useSelector(state => state.monedas.monedas)
     const [idMoneda, setIdMoneda] = useState(0);
-    const [moneda, setMoneda] = useState({})
-    let valorMoneda = 0;
 
-    useEffect(() => {
-
-        setMoneda(monedas.monedas?.find(mon => mon.id === idMoneda));
-
-    }, [idMoneda])
-
-    console.log(idMoneda)
-
-    console.log(moneda)
+    const mostrarValor = (id) => {
+        const mon = monedas.monedas.find(m => m.id == id);
+        return mon.cotizacion;
+    }
 
     const validationSchema = yup.object({
         usuario: yup
@@ -41,11 +34,10 @@ const IngresarTransaccion = () => {
 
     const formik = useFormik({
         initialValues: {
-            idUsuario: null,
-            tipoDeOperacion: null,
+            tipoTran: null,
             moneda: null,
             cantidad: null,
-            valorActual: null,
+            cotizacionActual: null,
         },
         validationSchema: validationSchema,
         onSubmit: (values) => AgregarTransaccion(values)
@@ -102,13 +94,13 @@ const IngresarTransaccion = () => {
                                                 color: "yellow"
                                             }
                                         }}
-                                        id="usuario"
-                                        name="usuario"
-                                        label="Usuario"
-                                        value={formik.values.usuario}
+                                        id="tipoTran"
+                                        name="tipoTran"
+                                        label="Tipo de Transaccion"
+                                        value={formik.values.tipoTran}
                                         onChange={formik.handleChange}
-                                        error={formik.touched.usuario && Boolean(formik.errors.usuario)}
-                                        helperText={formik.touched.usuario && formik.errors.usuario}>
+                                        error={formik.touched.tipoTran && Boolean(formik.errors.tipoTran)}
+                                        helperText={formik.touched.tipoTran && formik.errors.tipoTran}>
 
                                         <option key="0" value="0">Seleccione tipo de transaccion ...</option>
                                         <option key="1" value="1">Compra</option>
@@ -138,14 +130,13 @@ const IngresarTransaccion = () => {
                                                 color: "yellow"
                                             }
                                         }}
-                                        id="password"
-                                        type="password"
-                                        name="password"
-                                        label="Contraseña"
+                                        id="moneda"
+                                        name="moneda"
+                                        label="Moneda"
                                         onClick={capturarIdMoneda}
                                         onChange={formik.handleChange}
-                                        error={formik.touched.password && Boolean(formik.errors.password)}
-                                        helperText={formik.touched.password && formik.errors.password}
+                                        error={formik.touched.moneda && Boolean(formik.errors.moneda)}
+                                        helperText={formik.touched.moneda && formik.errors.moneda}
                                     >
                                         <option key="0" value="0">Seleccione una moneda ...</option>
                                         {monedas.monedas?.map(mon => <option key={mon.id} value={mon.id}>{mon.nombre}</option>)}
@@ -178,8 +169,8 @@ const IngresarTransaccion = () => {
                                         type="number"
                                         name="cantidad"
                                         label="Cantidad"
-                                        error={formik.touched.password && Boolean(formik.errors.password)}
-                                        helperText={formik.touched.password && formik.errors.password}
+                                        error={formik.touched.cantidad && Boolean(formik.errors.cantidad)}
+                                        helperText={formik.touched.cantidad && formik.errors.cantidad}
                                     />
                                 </div>
 
@@ -208,16 +199,16 @@ const IngresarTransaccion = () => {
                                         id="cotizacionActual"
                                         type="number"
                                         name="cotizacionActual"
-                                        value={valorMoneda}
+                                        value={mostrarValor(idMoneda)}
                                         onChange={formik.handleChange}
-                                        error={formik.touched.password && Boolean(formik.errors.password)}
-                                        helperText={formik.touched.password && formik.errors.password}
+                                        error={formik.touched.cotizacionActual && Boolean(formik.errors.cotizacionActual)}
+                                        helperText={formik.touched.cotizacionActual && formik.errors.cotizacionActual}
                                     />
                                 </div>
 
                                 <div className="form-group my-3">
                                     <button
-                                        disabled={!formik.values.password || !formik.values.usuario}
+                                        disabled={!formik.values.tipoTran || !formik.values.moneda || !formik.values.cantidad}
                                         type="submit"
                                         className="btn btn-dark btn-block m-3"
                                     >
