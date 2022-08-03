@@ -1,11 +1,11 @@
 import React from 'react'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Table from 'react-bootstrap/Table';
 import MontoFinal from '../montoTotal/MontoFinal';
 
+
 const Transacciones = () => {
-  
+
     const transacciones = useSelector(state => state.transacciones.transacciones);    
     const monedas = useSelector(state => state.monedas.monedas)
 
@@ -19,7 +19,7 @@ const Transacciones = () => {
             <div className='px-2'>
                 <h2 className='mt-2'>Transacciones</h2>
                 <MontoFinal/>
-                <Table striped bordered hover variant="light">
+                <Table striped variant="light">
                     <thead>
                         <tr>
                             <th>N° Transacción</th>
@@ -29,8 +29,7 @@ const Transacciones = () => {
                             <th>Valor</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    
+                    <tbody>                    
                         {transacciones.transacciones.map((tran, index) => {
                             return (                                
                                 <tr key={index}>
