@@ -119,7 +119,7 @@ export const ApiTransaccion = async ({ idUsuario, tipoDeOperacion, moneda, canti
 }
 
 export const apiMonedas= async () => {
-    console.log("Hola")
+    
     const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));    
 
     let headers = {
@@ -131,6 +131,34 @@ export const apiMonedas= async () => {
     }
 
     return fetch(`${apiURL}/monedas.php`, { headers })
+        .then((response) => response.json())
+        .then((result) => {
+
+            switch (result.codigo) {
+                case 200:
+                    return Promise.resolve(result);
+
+                default:
+                    return Promise.reject(result);
+            }
+        })
+        .catch((error) => Promise.reject(error.mensaje ? error.mensaje : "Ah ocurrido un error, vuelva a intentarlo mas tarde"));
+}
+
+
+export const apiMostrarTransaccion= async () => {
+    
+    const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));    
+
+    let headers = {
+        "Content-Type": "application/json"
+    }
+
+    if (dataLog != null) {
+        headers["apikey"] = `${dataLog.apiKey}`
+    }
+
+    return fetch(`${apiURL}/transacciones.php?idUsuario=${dataLog.id}`, { headers })
         .then((response) => response.json())
         .then((result) => {
 
