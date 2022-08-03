@@ -7,7 +7,7 @@ import { guardarMonedas } from '../../../features/monedas/MonedasSlice'
 
 const Monedas = () => {
 
-    const usuario = localStorage.getItem("usuario");
+    /* const usuario = localStorage.getItem("usuario");
     const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
 
     const dispatch = useDispatch();
@@ -36,7 +36,7 @@ const Monedas = () => {
                         break;
                 }
             })
-    }, []);
+    }, []); */
 
 
     return (
