@@ -6,6 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { Outlet, Link } from 'react-router-dom';
 
+
 const Dashboard = () => {
     const navigate = useNavigate();
     const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));       
@@ -22,7 +23,7 @@ const Dashboard = () => {
                <Navbar.Collapse id="basic-navbar-nav">
                  <Nav className="me-auto">                  
                    <Nav.Link as={Link} to="/">Transacciones</Nav.Link>
-                   <Nav.Link as={Link} to="/IngresarTransaccion">Ingresar Transacción</Nav.Link>    
+                   <Nav.Link as={Link} to="/IngresarTransaccion">Ingresar Transacción</Nav.Link>
                    <Nav.Link as={Link} to="/Monedas">Monedas</Nav.Link>                  
                    <Nav.Link as={Link} to="/CerrarSesion">Cerrar Sesión</Nav.Link>         
                  </Nav>

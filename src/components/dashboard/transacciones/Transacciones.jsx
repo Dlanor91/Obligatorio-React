@@ -5,10 +5,7 @@ import { guardarTransacciones } from '../../../features/transacciones/Transaccio
 import Table from 'react-bootstrap/Table';
 
 const Transacciones = () => {
-
-    const usuario = localStorage.getItem("usuario");
-    const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
-    const dispatch = useDispatch();   
+  
     const transacciones = useSelector(state => state.transacciones.transacciones);    
     const monedas = useSelector(state => state.monedas.monedas)
 
@@ -16,29 +13,6 @@ const Transacciones = () => {
         const mon = monedas.monedas.find(m=> m.id == id);
         return mon.nombre;        
     }
-
-    let headers = {
-        "Content-Type": "application/json"
-    }
-
-    if (dataLog != null) {
-        headers["apikey"] = `${dataLog.apiKey}`
-    }
-   
-    useEffect(() => {
-        fetch(`https://crypto.develotion.com/transacciones.php?idUsuario=${dataLog.id}`, { headers })
-            .then(r => r.json())
-            .then(datos => {
-
-                switch (datos.codigo) {
-                    case 200:
-                        dispatch(guardarTransacciones(datos))
-                        break;
-                    default:
-                        break;
-                }
-            })
-    }, []);
 
     if (transacciones.length !== 0) {
         return (
@@ -51,7 +25,7 @@ const Transacciones = () => {
                             <th>Moneda</th>
                             <th>Tipo de Operación</th>
                             <th>Cantidad</th>
-                            <th>Valor Moneda</th>
+                            <th>Valor</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,7 +38,7 @@ const Transacciones = () => {
                                     <td>{traerMoneda(tran.moneda)}</td>                                 
                                     <td>{(tran.tipo_operacion == 1)? "Compra": "Venta"}</td>
                                     <td>{tran.cantidad}</td>
-                                    <td>{tran.valor_actual}</td>
+                                    <td>$ {tran.valor_actual}</td>
                                 </tr>
                             )
                         })}

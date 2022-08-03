@@ -13,6 +13,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CerrarSesion from "./components/dashboard/cerrarSesion/CerrarSesion";
+import MontoFinal from "./components/dashboard/montoTotal/MontoFinal";
 
 const App = () => {
   return (
@@ -29,7 +30,6 @@ const App = () => {
                 element={<IngresarTransaccion />}
               />
               <Route path="/Monedas" element={<Monedas />} />
-
               <Route path="/CerrarSesion" element={<CerrarSesion />} />
             </Route>
 

@@ -1,7 +1,7 @@
 import React from "react";
 import Titulo from "./titulo/Titulo";
 import "./Login.css";
-import { apiLogin, apiMonedas } from "../../services/ServiciosApi";
+import { apiLogin, apiMonedas, apiMostrarTransaccion } from "../../services/ServiciosApi";
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
@@ -10,6 +10,7 @@ import Monedas from "../dashboard/monedas/Monedas";
 import Transacciones from "../dashboard/transacciones/Transacciones";
 import { useDispatch, useSelector } from "react-redux";
 import { guardarMonedas } from "../../features/monedas/MonedasSlice";
+import { guardarTransacciones } from "../../features/transacciones/TransaccionesSlice";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -42,7 +43,9 @@ const Login = () => {
             sessionStorage.setItem("DatosLog", JSON.stringify(respuesta));
             const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
             const monedas = await apiMonedas();
-            dispatch(guardarMonedas(monedas))           
+            dispatch(guardarMonedas(monedas))  
+            const mostrarTransaccion = await apiMostrarTransaccion();
+            dispatch(guardarTransacciones(mostrarTransaccion))          
             navigate("/");
         } catch (error) {
             alert(error);
