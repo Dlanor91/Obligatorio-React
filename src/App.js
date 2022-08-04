@@ -14,6 +14,10 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CerrarSesion from "./components/dashboard/cerrarSesion/CerrarSesion";
 import MontoFinal from "./components/dashboard/montoTotal/MontoFinal";
+import Grafica from "./components/dashboard/graficas/Grafica";
+import ValoresMoneda from "./components/dashboard/graficas/ValoresMoneda";
+import GraficoCompras from "./components/dashboard/graficas/GraficoCompras";
+import GraficoVentas from "./components/dashboard/graficas/GraficoVentas";
 
 const App = () => {
   return (
@@ -28,6 +32,18 @@ const App = () => {
               <Route
                 path="/IngresarTransaccion"
                 element={<IngresarTransaccion />}
+              />
+              <Route
+                path="/Graficas/GraficaCompras"
+                element={<GraficoCompras />}
+              />
+              <Route
+                path="/Graficas/GraficaVentas"
+                element={<GraficoVentas />}
+              />
+              <Route
+                path="/Graficas/ValoresMoneda"
+                element={<ValoresMoneda />}
               />
               <Route path="/Monedas" element={<Monedas />} />
               <Route path="/CerrarSesion" element={<CerrarSesion />} />

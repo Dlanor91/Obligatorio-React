@@ -3,6 +3,7 @@ import React from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { Outlet, Link } from 'react-router-dom';
 
@@ -24,7 +25,12 @@ const Dashboard = () => {
                  <Nav className="me-auto">                  
                    <Nav.Link as={Link} to="/">Transacciones</Nav.Link>
                    <Nav.Link as={Link} to="/IngresarTransaccion">Ingresar Transacción</Nav.Link>
-                   <Nav.Link as={Link} to="/Monedas">Monedas</Nav.Link>                  
+                   <Nav.Link as={Link} to="/Monedas">Monedas</Nav.Link>  
+                   <NavDropdown title="Gráficas" id="navbarScrollingDropdown">
+                    <NavDropdown.Item as={Link} to="/Graficas/GraficaCompras">Compras por Monedas</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/Graficas/GraficaVentas">Ventas por Monedas</NavDropdown.Item>                    
+                    <NavDropdown.Item as={Link} to="/Graficas/ValoresMoneda">Valores por Moneda</NavDropdown.Item>
+                   </NavDropdown>                                                      
                    <Nav.Link as={Link} to="/CerrarSesion">Cerrar Sesión</Nav.Link>         
                  </Nav>
                </Navbar.Collapse>
