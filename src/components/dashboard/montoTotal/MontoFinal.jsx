@@ -12,7 +12,7 @@ const MontoFinal = () => {
 
   useEffect(() => {
     const handlesumar = () => {
-      const sumarTotal = transacciones.transacciones.map
+      const sumarTotal = transacciones.map
                                                   ((monto) => parseFloat(
                                                       (monto.tipo_operacion == 1)?(monto.cantidad*monto.valor_actual)
                                                                                   :(-1*monto.cantidad*monto.valor_actual)))
@@ -21,7 +21,7 @@ const MontoFinal = () => {
         }, 0);
       setVSumTotal(sumarTotal);
 
-      const sumarTotalCompras = transacciones.transacciones.map
+      const sumarTotalCompras = transacciones.map
                                                   ((monto) => parseFloat(
                                                       (monto.tipo_operacion == 1)?(monto.cantidad*monto.valor_actual)
                                                                                   :0))
@@ -30,7 +30,7 @@ const MontoFinal = () => {
         }, 0);
         setCompras(sumarTotalCompras);
 
-        const sumarTotalVentas = transacciones.transacciones.map
+        const sumarTotalVentas = transacciones.map
                                                   ((monto) => parseFloat(
                                                       (monto.tipo_operacion == 2)?(monto.cantidad*monto.valor_actual)
                                                                                   :0))
