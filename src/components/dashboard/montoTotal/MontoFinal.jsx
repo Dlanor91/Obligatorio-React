@@ -14,8 +14,8 @@ const MontoFinal = () => {
     const handlesumar = () => {
       const sumarTotal = transacciones.transacciones.map
                                                   ((monto) => parseFloat(
-                                                      (monto.tipo_operacion == 1)?(-1*monto.cantidad*monto.valor_actual)
-                                                                                  :(monto.cantidad*monto.valor_actual)))
+                                                      (monto.tipo_operacion == 1)?(monto.cantidad*monto.valor_actual)
+                                                                                  :(-1*monto.cantidad*monto.valor_actual)))
         .reduce((previous, current) => {
           return previous + current;
         }, 0);
@@ -55,8 +55,8 @@ const MontoFinal = () => {
       <tbody>
         <tr>
           <td>Balance Final: <span className='fw-bold'> $ {vSumTotal} </span></td>  
-          <td>Gastos Compras: <span className='fw-bold'> $ {compras} </span></td>
-          <td>Ingresos Ventas: <span className='fw-bold'>{ventas}</span></td>                   
+          <td>Gastos en Compras: <span className='fw-bold'> $ {compras} </span></td>
+          <td>Ingresos en Ventas: <span className='fw-bold'> $ {ventas}</span></td>                   
         </tr>        
       </tbody>
     </Table>        

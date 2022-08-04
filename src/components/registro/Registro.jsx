@@ -73,7 +73,7 @@ const Registro = () => {
 
                 switch (datos.codigo) {
                     case 200:
-                        dispatch(guardarDepartamentos(datos))
+                        dispatch(guardarDepartamentos(datos.departamentos))
                         break;
                     default:
                         alert("No se obtuvo una respuesta correcta.");
@@ -91,7 +91,7 @@ const Registro = () => {
 
                 switch (datos.codigo) {
                     case 200:
-                        dispatch(guardarCiudades(datos))
+                        dispatch(guardarCiudades(datos.ciudades))
                         break;
                     default:
                         alert("No se obtuvo una respuesta correcta.");
@@ -186,7 +186,7 @@ const Registro = () => {
                         value={formik.values.idDepartamento}
                     >
                         <option key="0" value="0">Seleccione un Departamento ...</option>
-                        {mostrarDepartamentos.departamentos?.map(dep => <option key={dep.id} value={dep.id}>{dep.nombre}</option>)}
+                        {mostrarDepartamentos?.map(dep => <option key={dep.id} value={dep.id}>{dep.nombre}</option>)}
                     </Form.Select>
                 </Row>
                 {idDepartamento !== 0 && <Row className="justify-content-center mb-2" >
@@ -199,7 +199,7 @@ const Registro = () => {
                         value={formik.values.idCiudad}
                     >
                         <option key="0" value="0">Seleccione una Ciudad ...</option>
-                        {mostrarCiudades.ciudades?.map(city => <option key={city.id} value={city.id}>{city.nombre}</option>)}
+                        {mostrarCiudades?.map(city => <option key={city.id} value={city.id}>{city.nombre}</option>)}
 
                     </Form.Select>
                 </Row>}
