@@ -6,24 +6,14 @@ import "./IngresarTransaccion.css"
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
-import Row from '@mui/material/TextField'
-import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
 import { ApiTransaccion } from "../../../services/ServiciosApi";
-import Moneda from '../monedas/Monedas'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormHelperText from '@mui/material/FormHelperText';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate, useParams } from "react-router-dom";
 import FormControl from '@mui/material/FormControl';
-import Col from 'react-bootstrap/Col';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
 import InputLabel from '@mui/material/InputLabel';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import { CompressSharp } from '@mui/icons-material'
+
 
 const IngresarTransaccion = () => {
 

@@ -8,13 +8,11 @@ import { store } from "./store/Store";
 import { Provider } from "react-redux";
 import Transacciones from "./components/dashboard/transacciones/Transacciones";
 import IngresarTransaccion from "./components/dashboard/transacciones/IngresarTransaccion";
-import Monedas from "./components/dashboard/monedas/Monedas";
+
 import Dashboard from "./components/dashboard/Dashboard";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CerrarSesion from "./components/dashboard/cerrarSesion/CerrarSesion";
-import MontoFinal from "./components/dashboard/montoTotal/MontoFinal";
-import Grafica from "./components/dashboard/graficas/Grafica";
 import ValoresMoneda from "./components/dashboard/graficas/ValoresMoneda";
 import GraficoCompras from "./components/dashboard/graficas/GraficoCompras";
 import GraficoVentas from "./components/dashboard/graficas/GraficoVentas";
@@ -45,7 +43,6 @@ const App = () => {
                 path="/Graficas/ValoresMoneda"
                 element={<ValoresMoneda />}
               />
-              <Route path="/Monedas" element={<Monedas />} />
               <Route path="/CerrarSesion" element={<CerrarSesion />} />
             </Route>
 
