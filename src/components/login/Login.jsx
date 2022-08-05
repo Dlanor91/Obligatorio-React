@@ -6,8 +6,6 @@ import * as yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
 import { Link, useNavigate } from "react-router-dom";
-import Monedas from "../dashboard/monedas/Monedas";
-import Transacciones from "../dashboard/transacciones/Transacciones";
 import { useDispatch, useSelector } from "react-redux";
 import { guardarMonedas } from "../../features/monedas/MonedasSlice";
 import { guardarTransacciones } from "../../features/transacciones/TransaccionesSlice";

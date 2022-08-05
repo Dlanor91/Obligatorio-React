@@ -24,8 +24,7 @@ const Dashboard = () => {
                <Navbar.Collapse id="basic-navbar-nav">
                  <Nav className="me-auto">                  
                    <Nav.Link as={Link} to="/">Transacciones</Nav.Link>
-                   <Nav.Link as={Link} to="/IngresarTransaccion">Ingresar Transacción</Nav.Link>
-                   <Nav.Link as={Link} to="/Monedas">Monedas</Nav.Link>  
+                   <Nav.Link as={Link} to="/IngresarTransaccion">Ingresar Transacción</Nav.Link>                   
                    <NavDropdown title="Gráficas" id="navbarScrollingDropdown">
                     <NavDropdown.Item as={Link} to="/Graficas/GraficaCompras">Compras por Monedas</NavDropdown.Item>
                     <NavDropdown.Item as={Link} to="/Graficas/GraficaVentas">Ventas por Monedas</NavDropdown.Item>                    

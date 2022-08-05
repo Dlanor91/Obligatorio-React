@@ -2,7 +2,6 @@ import React from 'react'
 import Grafica from './Grafica'
 import { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
 
 const GraficoCompras = () => {
   const transacciones = useSelector(state => state.transacciones.transacciones);
