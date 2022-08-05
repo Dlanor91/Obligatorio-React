@@ -48,14 +48,15 @@ const Registro = () => {
     });
 
     const registro = async (usuario) => {
-        try {            
+        try {
+            console.log(usuario);
             const respuesta = await apiRegistro(usuario);
-            
-            if(respuesta != undefined){
+
+            if (respuesta != undefined) {
                 alert("Usuario registrado correctamente.")
-                navigate("/Login"); 
-            }            
-                     
+                navigate("/Login");
+            }
+
         } catch (error) {
             alert(error);
         }
@@ -73,7 +74,7 @@ const Registro = () => {
 
                 switch (datos.codigo) {
                     case 200:
-                        dispatch(guardarDepartamentos(datos.departamentos))
+                        dispatch(guardarDepartamentos(datos))
                         break;
                     default:
                         alert("No se obtuvo una respuesta correcta.");
@@ -91,7 +92,7 @@ const Registro = () => {
 
                 switch (datos.codigo) {
                     case 200:
-                        dispatch(guardarCiudades(datos.ciudades))
+                        dispatch(guardarCiudades(datos))
                         break;
                     default:
                         alert("No se obtuvo una respuesta correcta.");
@@ -186,7 +187,7 @@ const Registro = () => {
                         value={formik.values.idDepartamento}
                     >
                         <option key="0" value="0">Seleccione un Departamento ...</option>
-                        {mostrarDepartamentos?.map(dep => <option key={dep.id} value={dep.id}>{dep.nombre}</option>)}
+                        {mostrarDepartamentos.departamentos?.map(dep => <option key={dep.id} value={dep.id}>{dep.nombre}</option>)}
                     </Form.Select>
                 </Row>
                 {idDepartamento !== 0 && <Row className="justify-content-center mb-2" >
@@ -199,7 +200,7 @@ const Registro = () => {
                         value={formik.values.idCiudad}
                     >
                         <option key="0" value="0">Seleccione una Ciudad ...</option>
-                        {mostrarCiudades?.map(city => <option key={city.id} value={city.id}>{city.nombre}</option>)}
+                        {mostrarCiudades.ciudades?.map(city => <option key={city.id} value={city.id}>{city.nombre}</option>)}
 
                     </Form.Select>
                 </Row>}
@@ -212,12 +213,12 @@ const Registro = () => {
                     >
                         Registrarse{" "}
                     </button>
-                    <button                                    
-                                    type="submit"
-                                    className="btn btn-dark btn-block mx-2 w-25"
-                                    onClick={() => navigate("/Login")}
-                                >
-                                    Ingresar{" "}
+                    <button
+                        type="submit"
+                        className="btn btn-dark btn-block mx-2 w-25"
+                        onClick={() => navigate("/Login")}
+                    >
+                        Ingresar{" "}
                     </button>
                 </Row>
             </Form>
