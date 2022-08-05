@@ -8,8 +8,7 @@ const Transacciones = () => {
 
     const transacciones = useSelector(state => state.transacciones.transacciones);    
     const monedas = useSelector(state => state.monedas.monedas)
-    console.log(transacciones)
-    console.log(monedas)
+    
     const traerMoneda =(id)=>{ 
         const mon = monedas.find(m=> m.id == id);
         return mon.nombre;        

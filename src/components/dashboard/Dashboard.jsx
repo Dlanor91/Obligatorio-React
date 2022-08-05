@@ -11,7 +11,7 @@ import { Outlet, Link } from 'react-router-dom';
 const Dashboard = () => {
     const navigate = useNavigate();
     const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));       
-    console.log(dataLog)
+    //console.log(dataLog)
     if(dataLog == null){
       return <Navigate replace to={"/Login"}></Navigate>;
     } else {
