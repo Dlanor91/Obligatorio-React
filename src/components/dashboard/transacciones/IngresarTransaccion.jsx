@@ -55,11 +55,8 @@ const IngresarTransaccion = () => {
     });
 
     useEffect(() => {
-        if (params.tareaId) {
-            console.log(`object`, params);
-
-        }
-    }, []);
+        formik.values.cotizacionActual = formik.values.moneda > 0 ? mostrarValor(formik.values.moneda) : 0;
+    }, [formik.values.moneda]);
 
 
     const capturarIdMoneda = () => {
@@ -89,16 +86,41 @@ const IngresarTransaccion = () => {
                                 <div className="form-group m-3">
 
                                     <FormControl sx={{ m: 0, minWidth: '100%' }}>
-                                        <InputLabel id="demo-simple-select-standard-label">Moneda</InputLabel>
+                                        <InputLabel id="demo-simple-select-standard-label"
+                                            sx={{
+                                                color: "white",
+                                            }}
+                                        >Tipo de Transaccion</InputLabel>
+
                                         <Select
+                                            sx={{
+                                                borderColor: "white",
+                                                select: {
+                                                    color: "white",
+                                                    backgroundColor: "grey"
+                                                },
+                                                Label: {
+                                                    color: "white"
+                                                },
+                                                "&.MuiOutlinedInput-root": {
+                                                    "& fieldset": {
+                                                        borderColor: "white"
+                                                    }, "&.Mui-focused fieldset": {
+                                                        borderColor: "yellow"
+                                                    }
+                                                },
+                                                "& label.Mui-focused": {
+                                                    color: "yellow"
+                                                }
+                                            }}
                                             labelId="demo-simple-select-standard-label"
                                             id="tipoTran"
                                             name='tipoTran'
                                             value={formik.values.moneda}
                                             onChange={formik.handleChange}
-                                            label="Tipo de Transaccion"
                                         >
-                                            <MenuItem value="">
+
+                                            {/* <MenuItem value="">
                                                 <em>Transaccion</em>
                                             </MenuItem>
                                             {tipoCompra.map((m) => (
@@ -108,7 +130,11 @@ const IngresarTransaccion = () => {
                                                 >
                                                     {m.nombre}
                                                 </MenuItem>
-                                            ))}
+                                            ))} */}
+
+                                            <MenuItem key={1} value={1}> Compra </MenuItem>
+                                            <MenuItem key={2} value={2}> Venta </MenuItem>
+
                                         </Select>
                                         <FormHelperText error>{formik.touched.moneda && formik.errors.moneda}</FormHelperText>
                                     </FormControl>
@@ -116,8 +142,32 @@ const IngresarTransaccion = () => {
 
                                 <div className="form-group m-3">
                                     <FormControl sx={{ m: 0, minWidth: '100%' }}>
-                                        <InputLabel id="demo-simple-select-standard-label">Moneda</InputLabel>
+                                        <InputLabel id="demo-simple-select-standard-label"
+                                            sx={{
+                                                color: "white"
+                                            }}
+                                        >Moneda</InputLabel>
                                         <Select
+                                            sx={{
+                                                borderColor: "white",
+                                                select: {
+                                                    color: "white",
+                                                    backgroundColor: "grey"
+                                                },
+                                                Label: {
+                                                    color: "white"
+                                                },
+                                                "&.MuiOutlinedInput-root": {
+                                                    "& fieldset": {
+                                                        borderColor: "white"
+                                                    }, "&.Mui-focused fieldset": {
+                                                        borderColor: "yellow"
+                                                    }
+                                                },
+                                                "& label.Mui-focused": {
+                                                    color: "yellow"
+                                                }
+                                            }}
                                             labelId="demo-simple-select-standard-label"
                                             id="moneda"
                                             name='moneda'
