@@ -14,7 +14,7 @@ const Grafica = ({ datos, categorias, nombreSeries = "" }) => {
       }, 
       chart: {
         id: "apexchart-example",
-       
+        background: '#fff',
       },
       xaxis: {
         categories: categorias,                
