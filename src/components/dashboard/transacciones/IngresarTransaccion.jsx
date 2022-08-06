@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { crearTransaccion } from '../../../features/transacciones/TransaccionesSlice'
 import "./IngresarTransaccion.css"
@@ -7,39 +7,57 @@ import * as yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
 import { ApiTransaccion } from "../../../services/ServiciosApi";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import FormHelperText from '@mui/material/FormHelperText';
 import MenuItem from '@mui/material/MenuItem';
-import { useNavigate, useParams } from "react-router-dom";
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-
+import { guardarMonedas } from "../../../features/monedas/MonedasSlice";
+import { apiMonedas } from "../../../services/ServiciosApi";
+import TablaMoneda from '../tablaMonedas/TablaMoneda'
 
 const IngresarTransaccion = () => {
 
-    const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
+    const dispatch = useDispatch();
     const monedas = useSelector(state => state.monedas.monedas)
-    const [idMoneda, setIdMoneda] = useState(0);
-    const params = useParams();
 
-    const mostrarValor = (id) => {
-        const mon = monedas.find(m => m.id == id);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            cargarMonedas();
+            mostrarValor();
+        }, 10000);
+        return () => clearInterval(interval);
+    }, []);
+
+    const cargarMonedas = async () => {
+        try {
+            const mon = await apiMonedas();
+            dispatch(guardarMonedas(mon.monedas));
+        } catch (error) {
+            alert(error);
+        }
+    }
+
+    const mostrarValor = () => {
+        const mon = monedas.find(m => m.id === formik.values.moneda);
         return mon != null ? mon.cotizacion : 0;
     }
 
     const validationSchema = yup.object({
         tipoOperacion: yup
-            .number('Ingrese el tipo de transaccion por favor ')
+            .number()
             .required('Seleccione la transaccion por favor.'),
         moneda: yup
-            .number('Ingrese la moneda por favor ')
+            .number()
             .required('Seleccione la moneda por favor.'),
         cantidad: yup
-            .number('Ingrese la cantidad por favor ')
-            .required('La cantidad no puede estar vacía.'),
+            .number()
+            .required('La cantidad no puede ser 0.')
+            .min(1, "Debe ser mayor a 0"),
         valorActual: yup
-            .number('Seleccione la moneda para cargar el valor de la cotizacion')
-            .required('La contraseña no puede estar vacía.'),
+            .number()
+            .required('El valor no puede ser 0.')
+            .min(1, "Debe ser mayor a 0"),
     });
 
     const formik = useFormik({
@@ -54,21 +72,17 @@ const IngresarTransaccion = () => {
     });
 
     useEffect(() => {
-        formik.values.valorActual = formik.values.moneda > 0 ? mostrarValor(formik.values.moneda) : 0;
+        formik.values.valorActual = formik.values.moneda > 0 ? mostrarValor() : 0;
     }, [formik.values.moneda]);
-
-
-    const capturarIdMoneda = () => {
-        console.log(formik.values.moneda)
-        formik.values.valorActual = mostrarValor(formik.values.moneda);
-    }
 
     const AgregarTransaccion = async (transaccion) => {
 
         try {
             const respuesta = await ApiTransaccion(transaccion);
             transaccion.id = respuesta.idTransaccion
-            console.log(transaccion);
+            transaccion.valor_actual = transaccion.valorActual;
+            delete transaccion.valorActual
+            dispatch(crearTransaccion(transaccion))
         } catch (error) {
             alert(error);
         }
@@ -76,12 +90,14 @@ const IngresarTransaccion = () => {
 
     if (monedas.length !== 0) {
         return (
-
             <div className="container mt-5">
+
                 <div className="d-flex justify-content-center h-100">
+
                     <div className="card align-items-center">
+
                         <div className="card-header">
-                            <h1 text="Bienvenido" />
+                            <h1> Transacciones </h1>
                         </div>
 
                         <div className="card-body">
@@ -93,7 +109,7 @@ const IngresarTransaccion = () => {
                                             sx={{
                                                 color: "white",
                                             }}
-                                        >Tipo de Transaccion</InputLabel>
+                                        >Transaccion</InputLabel>
 
                                         <Select
                                             sx={{
@@ -122,12 +138,14 @@ const IngresarTransaccion = () => {
                                             name='tipoOperacion'
                                             value={formik.values.tipoOperacion}
                                             onChange={formik.handleChange}
+                                            error={formik.touched.tipoOperacion && Boolean(formik.errors.tipoOperacion)}
                                         >
+                                            <MenuItem value=""> Seleccione tipo de compra... </MenuItem>
                                             <MenuItem key={1} value={1}> Compra </MenuItem>
                                             <MenuItem key={2} value={2}> Venta </MenuItem>
 
                                         </Select>
-                                        {/* <FormHelperText error>{formik.touched.tipoOperacion && formik.errors.tipoOperacion}</FormHelperText> */}
+                                        <FormHelperText error>{formik.touched.tipoOperacion && formik.errors.tipoOperacion}</FormHelperText>
                                     </FormControl>
                                 </div>
 
@@ -163,11 +181,9 @@ const IngresarTransaccion = () => {
                                             labelId="demo-simple-select-standard-label"
                                             id="moneda"
                                             name='moneda'
-                                            onClick={capturarIdMoneda}
                                             onChange={formik.handleChange}
                                             value={formik.values.moneda}
-                                            label="Moneda"
-
+                                            error={formik.touched.moneda && Boolean(formik.errors.moneda)}
                                         >
                                             <MenuItem value="">
                                                 <em>Seleccione una moneda</em>
@@ -181,45 +197,13 @@ const IngresarTransaccion = () => {
                                                 </MenuItem>
                                             ))}
                                         </Select>
-                                        {/* <FormHelperText error>{formik.touched.moneda && formik.errors.moneda}</FormHelperText> */}
+                                        <FormHelperText error>{formik.touched.moneda && formik.errors.moneda}</FormHelperText>
                                     </FormControl>
-                                    {/* <Form.Select
-                                        fullWidth
-                                        sx={{
-                                            input: {
-                                                color: "white",
-                                                backgroundColor: "grey"
-                                            },
-                                            Label: {
-                                                color: "white"
-                                            },
-                                            "& .MuiOutlinedInput-root": {
-                                                "& fieldset": {
-                                                    borderColor: "white"
-                                                }, "&.Mui-focused fieldset": {
-                                                    borderColor: "yellow"
-                                                }
-                                            },
-                                            "& label.Mui-focused": {
-                                                color: "yellow"
-                                            }
-                                        }}
-                                        id="moneda"
-                                        name="moneda"
-                                        label="Moneda"
-                                        value={formik.values.moneda}
-                                        onClick={capturarIdMoneda}
-                                        onChange={formik.handleChange}
 
-                                    >
-                                        <option key="0" value="0">Seleccione una moneda ...</option>
-                                        {monedas?.map(mon => <option key={mon.id} value={mon.id}>{mon.nombre}</option>)}
-                                    </Form.Select> */}
                                 </div>
 
                                 <div className="form-group m-3">
                                     <TextField
-                                        //fullWidth
                                         sx={{
                                             input: {
                                                 color: "white",
@@ -245,8 +229,8 @@ const IngresarTransaccion = () => {
                                         label="Cantidad"
                                         value={formik.values.cantidad}
                                         onChange={formik.handleChange}
-                                    // error={formik.touched.cantidad && Boolean(formik.errors.cantidad)}
-                                    // helperText={formik.touched.cantidad && formik.errors.cantidad}
+                                        error={formik.touched.cantidad && Boolean(formik.errors.cantidad)}
+                                        helperText={formik.touched.cantidad && formik.errors.cantidad}
                                     />
                                 </div>
 
@@ -282,7 +266,9 @@ const IngresarTransaccion = () => {
                                         id="valorActual"
                                         type="number"
                                         name="valorActual"
-                                        value={formik.values.valorActual}
+                                        value={mostrarValor()}
+                                        error={formik.touched.valorActual && Boolean(formik.errors.valorActual)}
+                                        helperText={formik.touched.valorActual && formik.errors.valorActual}
                                     />
                                 </div>
 
@@ -298,6 +284,7 @@ const IngresarTransaccion = () => {
                             </form>
                         </div>
                     </div>
+                    <TablaMoneda />
                 </div>
             </div>
         )

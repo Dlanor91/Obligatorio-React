@@ -1,16 +1,13 @@
 import React from 'react'
-import { useState } from 'react'
 import { useSelector } from 'react-redux';
 import GraficaBarras from './modelosGraficas/GraficaBarras';
 import { Link } from 'react-router-dom';
 
 const GraficoCompras = () => {
+
   const transacciones = useSelector(state => state.transacciones.transacciones);
   const monedas = useSelector(state => state.monedas.monedas);
   const auxMonedas = monedas.map(m => m.id);
- 
-  const [compras, setCompras] = useState([]);
-
   
   const filtarTransacciones = (id)=>{
 

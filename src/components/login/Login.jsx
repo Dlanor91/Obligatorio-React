@@ -5,8 +5,8 @@ import { apiLogin, apiMonedas, apiMostrarTransaccion } from "../../services/Serv
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { guardarMonedas } from "../../features/monedas/MonedasSlice";
 import { guardarTransacciones } from "../../features/transacciones/TransaccionesSlice";
 
@@ -34,17 +34,14 @@ const Login = () => {
     const Logueo = async (usuario) => {
 
         try {
-            //console.log('usuario', usuario);
-            const respuesta = await apiLogin(usuario);            
-            //console.log('respuesta', respuesta);
+            const respuesta = await apiLogin(usuario);
             localStorage.setItem("usuario", JSON.stringify(usuario));
             sessionStorage.setItem("DatosLog", JSON.stringify(respuesta));
-            const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
-            const monedas = await apiMonedas();           
-            dispatch(guardarMonedas(monedas.monedas));            
+            const monedas = await apiMonedas();
+            dispatch(guardarMonedas(monedas.monedas));
             const mostrarTransaccion = await apiMostrarTransaccion();
             dispatch(guardarTransacciones(mostrarTransaccion.transacciones));
-                      
+
             navigate("/");
         } catch (error) {
             alert(error);
@@ -58,7 +55,7 @@ const Login = () => {
                     <div className="card-header">
                         <Titulo text="Bienvenido" />
                     </div>
-                    
+
                     <div className="card-body">
                         <form onSubmit={formik.handleSubmit}>
                             <div className="form-group m-3">
@@ -124,7 +121,7 @@ const Login = () => {
                                     id="password"
                                     type="password"
                                     name="password"
-                                    label="Contraseña"                                    
+                                    label="Contraseña"
                                     value={formik.values.password}
                                     onChange={formik.handleChange}
                                     error={formik.touched.password && Boolean(formik.errors.password)}
@@ -141,7 +138,7 @@ const Login = () => {
                                 >
                                     Ingresar{" "}
                                 </button>
-                                <button                                    
+                                <button
                                     type="submit"
                                     className="btn btn-dark btn-block m-3"
                                     onClick={() => navigate("/Registro")}
@@ -150,8 +147,8 @@ const Login = () => {
                                 </button>
                             </div>
 
-                        </form>                    
-                    </div>                    
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
