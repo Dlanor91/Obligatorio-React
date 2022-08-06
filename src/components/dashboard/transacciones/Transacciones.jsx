@@ -2,11 +2,13 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import Table from 'react-bootstrap/Table';
 import MontoFinal from '../montoTotal/MontoFinal';
+import { Link } from 'react-router-dom';
 
 
 const Transacciones = () => {
 
-    const transacciones = useSelector(state => state.transacciones.transacciones);    
+    const transacciones = useSelector(state => state.transacciones.transacciones);
+    console.log(transacciones)    
     const monedas = useSelector(state => state.monedas.monedas)
     
     const traerMoneda =(id)=>{ 
@@ -14,7 +16,7 @@ const Transacciones = () => {
         return mon.nombre;        
     }
 
-    if (transacciones.length !== 0) {
+    if (transacciones.length != 0) {
         return (
             <div className='px-2'>
                 <h2 className='mt-2'>Transacciones</h2>
@@ -47,7 +49,10 @@ const Transacciones = () => {
             </div>
         )
     } else {
-        <div> Transacciones</div>
+        return(
+            <p className='parrafo fw-bold'> <br/>No hay Transacciones para mostrar!. 
+            <Link style={{textDecoration:'none', color:"red"}} to="/IngresarTransaccion"> Ingresar Transacción</Link></p>
+        )
     }
 }
 

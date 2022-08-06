@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect} from 'react'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
@@ -11,7 +11,6 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormHelperText from '@mui/material/FormHelperText';
-import Grid from '@mui/material/Grid';
 import { apiRegistro } from '../../services/ServiciosApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { guardarCiudades } from '../../features/ciudades/CiudadesSlice';
@@ -26,10 +25,6 @@ const Registro = () => {
     const mostrarDepartamentos = useSelector((state) => state.departamentos.departamentos);
     const mostrarCiudades = useSelector(state => state.ciudades.ciudades);;
 
-    //const [idDepartamento, setIdDepartamento] = useState(0);
-    const refCiudad = useRef(0);
-
-
     const validationSchema = yup.object({
         usuario: yup
             .string('Ingrese su usuario')
@@ -39,7 +34,10 @@ const Registro = () => {
             .required('La contraseña no puede estar vacía.'),
         idDepartamento: yup
             .string('Ingrese un Departamento')
-            .required('Seleccione un departamento ....'),
+            .required('Seleccione un Departamento ....'),
+        idCiudad: yup
+            .string('Ingrese una Ciudad')
+            .required('Seleccione una Ciudad ....'),
     });
 
     const formik = useFormik({
@@ -47,7 +45,7 @@ const Registro = () => {
             usuario: '',
             password: '',
             idDepartamento: '',
-            idCiudad: 0
+            idCiudad: ''
         },
         validationSchema: validationSchema,
         onSubmit: (values) => registro(values)
@@ -67,10 +65,6 @@ const Registro = () => {
             alert(error);
         }
     }
-
-    /* const capturarIdDepartamento = (event) => {
-        setIdDepartamento(event.currentTarget.value);
-    } */
 
     useEffect(() => {
 
@@ -183,8 +177,20 @@ const Registro = () => {
                         helperText={formik.touched.password && formik.errors.password}
                     />
                 </Row>                
-                <Grid item xs={12} sm={12} className="mb-2">
-                <FormControl sx={{m:0,minWidth: '50%' ,
+                <div className="form-group m-3">
+                <FormControl sx={{  m:0,
+                                    minWidth: '58%' ,
+                                 }}>
+                                            <InputLabel id="demo-simple-select-standard-label"
+                                            sx={{
+                                                color: "white"
+                                            }}
+                                            >
+                                                Departamentos
+                                            </InputLabel>
+                                            
+                                            <Select
+                                            sx={{
                                                 color: "white",
                                                 borderColor: "white",
                                                 select: {
@@ -204,9 +210,7 @@ const Registro = () => {
                                                 "& label.Mui-focused": {
                                                     color: "yellow"
                                                 }
-                                            }}>
-                                            <InputLabel id="demo-simple-select-standard-label">Departamentos</InputLabel>
-                                            <Select
+                                            }}
                                                 labelId="demo-simple-select-standard-label"
                                                 id="idDepartamento"
                                                 name='idDepartamento'
@@ -215,7 +219,7 @@ const Registro = () => {
                                                 label="Departamentos"                           
                                             >
                                                 <MenuItem value="">
-                                                    <em>Seleccione un departamento</em>
+                                                    <em>Seleccione un Departamento</em>
                                                 </MenuItem>
                                                 {mostrarDepartamentos.map((dep) => (
                                                     <MenuItem
@@ -228,25 +232,66 @@ const Registro = () => {
                                             </Select>
                                             <FormHelperText error>{formik.touched.idDepartamento && formik.errors.idDepartamento}</FormHelperText>
                     </FormControl>  
-                </Grid>
-                {formik.values.idDepartamento != "" && <Row className="justify-content-center mb-2" >
-                    <Form.Select
-                        id="idCiudad"
-                        name="idCiudad"
-                        className="w-50 m-2"
-                        ref={refCiudad}
-                        onChange={formik.handleChange}
-                        value={formik.values.idCiudad}
-                    >
-                        <option key="0" value="0">Seleccione una Ciudad ...</option>
-                        {mostrarCiudades?.map(city => <option key={city.id} value={city.id}>{city.nombre}</option>)}
-
-                    </Form.Select>
-                </Row>}
+                </div>
+                {formik.values.idDepartamento != "" && <div className="form-group m-3">
+                <FormControl sx={{  m:0,
+                                    minWidth: '58%' ,
+                                 }}>
+                                            <InputLabel id="demo-simple-select-standard-label"
+                                            sx={{
+                                                color: "white"
+                                            }}
+                                            >
+                                                Ciudades
+                                            </InputLabel>
+                                            
+                                            <Select
+                                            sx={{
+                                                color: "white",
+                                                borderColor: "white",
+                                                select: {
+                                                    color: "white",
+                                                    backgroundColor: "grey"
+                                                },
+                                                Label: {
+                                                    color: "white"
+                                                },
+                                                "&.MuiOutlinedInput-root": {
+                                                    "& fieldset": {
+                                                        borderColor: "white"
+                                                    }, "&.Mui-focused fieldset": {
+                                                        borderColor: "yellow"
+                                                    }
+                                                },
+                                                "& label.Mui-focused": {
+                                                    color: "yellow"
+                                                }
+                                            }}
+                                                labelId="demo-simple-select-standard-label"
+                                                id="idCiudad"
+                                                name='idCiudad'
+                                                value={formik.values.idCiudad}
+                                                onChange={formik.handleChange}
+                                                label="Ciudades"                           
+                                            >
+                                                <MenuItem value="">
+                                                    <em>Seleccione una Ciudad</em>
+                                                </MenuItem>
+                                                {mostrarCiudades.map((city) => (
+                                                    <MenuItem
+                                                        key={city.id}
+                                                        value={city.id}
+                                                    >
+                                                        {city.nombre}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                            <FormHelperText error>{formik.touched.idCiudad && formik.errors.idCiudad}</FormHelperText>
+                    </FormControl>  
+                </div>}
                 <Row className="justify-content-center mb-3">
 
-                    <button
-                        //disabled={!formik.values.password || !formik.values.usuario || formik.values.idDepartamento == 0 || formik.values.idCiudad == 0}
+                    <button                        
                         type="submit"
                         className="btn btn-dark btn-block px-1 mx-0 w-25"
                     >

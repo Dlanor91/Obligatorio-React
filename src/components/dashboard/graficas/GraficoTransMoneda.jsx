@@ -8,7 +8,8 @@ import FormHelperText from '@mui/material/FormHelperText';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
+import { Link } from 'react-router-dom';
 import './EstilosGraficas.css';
 
 const GraficoTransMoneda = () => {
@@ -57,6 +58,7 @@ const GraficoTransMoneda = () => {
     }
     console.log(data);
 
+    if (transacciones.length != 0) {
     return (
     <>
      <div className="mt-5">
@@ -129,6 +131,14 @@ const GraficoTransMoneda = () => {
               :<p className='parrafo fw-bold'> <br/></p>}
     </>
     )
+    }else{
+        return(
+          
+            <p className='parrafo fw-bold'> <br/>No hay Gráficas para mostrar!
+            <Link style={{textDecoration:'none', color:"red"}} to="/IngresarTransaccion"> Ingresar Transacción</Link></p>
+          
+        )
+      }
 }
 
 export default GraficoTransMoneda
