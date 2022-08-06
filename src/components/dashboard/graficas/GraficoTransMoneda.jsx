@@ -16,8 +16,7 @@ const GraficoTransMoneda = () => {
     const monedas = useSelector(state => state.monedas.monedas);
 
     const [mostrar, setMostrar] = useState(false);
-    const [busqueda, setBusqueda] = useState([]);
-     
+         
     const [data, setData] = useState([]);  
 
     const validationSchema = yup.object({        
@@ -38,14 +37,13 @@ const GraficoTransMoneda = () => {
         
         if(formik.values.idMoneda>0){
             setMostrar(true)
-            const busquedaTrans = transacciones.filter(trans => trans.moneda == formik.values.idMoneda); 
-            
-            setBusqueda(busquedaTrans);            
-            (busqueda.length>0)?guardarDatos(busqueda) 
-                           :console.log(busquedaTrans);            
+            const busquedaTrans = transacciones.filter(trans => trans.moneda == formik.values.idMoneda);                                 
+            (busquedaTrans !=undefined)?guardarDatos(busquedaTrans) 
+                           :setData([]);            
         }
         else{
-            setMostrar(false)
+            setMostrar(false);
+            setData([]);
         } 
         
     }, [formik.values.idMoneda]);    
@@ -126,8 +124,8 @@ const GraficoTransMoneda = () => {
     </div>
      
     {(mostrar)?
-               (busqueda.length>0)?<GraficaLineas {...data}/>
-                                  :<p className='parrafo fw-bold'> <br/>No hay Transacciones para mostrar!</p>                                  
+               (data.datos.length==0)?<p className='parrafo fw-bold'> <br/>No hay Transacciones para mostrar!</p>
+                            :<GraficaLineas {...data}/>                                                              
               :<p className='parrafo fw-bold'> <br/></p>}
     </>
     )
