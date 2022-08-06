@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useSelector } from 'react-redux';
 import GraficaBarras from './modelosGraficas/GraficaBarras';
+import { Link } from 'react-router-dom';
 
 
 const GraficoVentas = () => {
@@ -28,9 +29,19 @@ const GraficoVentas = () => {
 
     const [data, setData] = useState({ datos: datos, categorias: categorias })
 
-    return (
-        <GraficaBarras {...data} />
+  if (transacciones.length != 0) {
+    return (    
+      <GraficaBarras {...data}/>   
+
     )
+  }else{
+    return(
+      
+        <p className='parrafo fw-bold'> <br/>No hay Gráficas para mostrar!
+        <Link style={{textDecoration:'none', color:"red"}} to="/IngresarTransaccion"> Ingresar Transacción</Link></p>
+      
+    )
+  }
 }
 
 export default GraficoVentas
