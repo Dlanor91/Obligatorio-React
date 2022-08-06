@@ -21,56 +21,59 @@ const IngresarTransaccion = () => {
     const monedas = useSelector(state => state.monedas.monedas)
     const [idMoneda, setIdMoneda] = useState(0);
     const params = useParams();
-    const tipoCompra = [{ id: 0, nombre: "Seleccione tipo de transaccion" }, { id: 1, nombre: "Compra" }, { id: 2, nombre: "Venta" }]
 
     const mostrarValor = (id) => {
         const mon = monedas.find(m => m.id == id);
-        return mon.cotizacion;
+        return mon != null ? mon.cotizacion : 0;
     }
 
     const validationSchema = yup.object({
-        tipoTran: yup
-            .number('Seleccione Tipo de moneda')
-            .required('El usuario no puede estar vacío.'),
+        tipoOperacion: yup
+            .number('Ingrese el tipo de transaccion por favor ')
+            .required('Seleccione la transaccion por favor.'),
         moneda: yup
-            .number('Ingrese su contraseña')
-            .required('La contraseña no puede estar vacía.'),
+            .number('Ingrese la moneda por favor ')
+            .required('Seleccione la moneda por favor.'),
         cantidad: yup
-            .number('Ingrese su contraseña')
-            .required('La contraseña no puede estar vacía.'),
-        cotizacionActual: yup
-            .number('Ingrese su contraseña')
+            .number('Ingrese la cantidad por favor ')
+            .required('La cantidad no puede estar vacía.'),
+        valorActual: yup
+            .number('Seleccione la moneda para cargar el valor de la cotizacion')
             .required('La contraseña no puede estar vacía.'),
     });
 
     const formik = useFormik({
         initialValues: {
-            tipoTran: 0,
-            moneda: 0,
-            cantidad: 0,
-            cotizacionActual: 0,
+            tipoOperacion: "",
+            moneda: "",
+            cantidad: "",
+            valorActual: "",
         },
         validationSchema: validationSchema,
-        onSubmit: (values) => { console.log(values) }
+        onSubmit: (values) => AgregarTransaccion(values)
     });
 
     useEffect(() => {
-        formik.values.cotizacionActual = formik.values.moneda > 0 ? mostrarValor(formik.values.moneda) : 0;
+        formik.values.valorActual = formik.values.moneda > 0 ? mostrarValor(formik.values.moneda) : 0;
     }, [formik.values.moneda]);
 
 
     const capturarIdMoneda = () => {
         console.log(formik.values.moneda)
-        formik.values.cotizacionActual = mostrarValor(formik.values.moneda);
+        formik.values.valorActual = mostrarValor(formik.values.moneda);
     }
 
     const AgregarTransaccion = async (transaccion) => {
+
         try {
             const respuesta = await ApiTransaccion(transaccion);
+            transaccion.id = respuesta.idTransaccion
+            console.log(transaccion);
         } catch (error) {
             alert(error);
         }
     }
+
     if (monedas.length !== 0) {
         return (
 
@@ -94,6 +97,7 @@ const IngresarTransaccion = () => {
 
                                         <Select
                                             sx={{
+                                                color: "white",
                                                 borderColor: "white",
                                                 select: {
                                                     color: "white",
@@ -114,29 +118,16 @@ const IngresarTransaccion = () => {
                                                 }
                                             }}
                                             labelId="demo-simple-select-standard-label"
-                                            id="tipoTran"
-                                            name='tipoTran'
-                                            value={formik.values.moneda}
+                                            id="tipoOperacion"
+                                            name='tipoOperacion'
+                                            value={formik.values.tipoOperacion}
                                             onChange={formik.handleChange}
                                         >
-
-                                            {/* <MenuItem value="">
-                                                <em>Transaccion</em>
-                                            </MenuItem>
-                                            {tipoCompra.map((m) => (
-                                                <MenuItem
-                                                    key={m.id}
-                                                    value={m.id}
-                                                >
-                                                    {m.nombre}
-                                                </MenuItem>
-                                            ))} */}
-
                                             <MenuItem key={1} value={1}> Compra </MenuItem>
                                             <MenuItem key={2} value={2}> Venta </MenuItem>
 
                                         </Select>
-                                        <FormHelperText error>{formik.touched.moneda && formik.errors.moneda}</FormHelperText>
+                                        {/* <FormHelperText error>{formik.touched.tipoOperacion && formik.errors.tipoOperacion}</FormHelperText> */}
                                     </FormControl>
                                 </div>
 
@@ -149,6 +140,7 @@ const IngresarTransaccion = () => {
                                         >Moneda</InputLabel>
                                         <Select
                                             sx={{
+                                                color: "white",
                                                 borderColor: "white",
                                                 select: {
                                                     color: "white",
@@ -176,7 +168,6 @@ const IngresarTransaccion = () => {
                                             value={formik.values.moneda}
                                             label="Moneda"
 
-
                                         >
                                             <MenuItem value="">
                                                 <em>Seleccione una moneda</em>
@@ -190,7 +181,7 @@ const IngresarTransaccion = () => {
                                                 </MenuItem>
                                             ))}
                                         </Select>
-                                        <FormHelperText error>{formik.touched.moneda && formik.errors.moneda}</FormHelperText>
+                                        {/* <FormHelperText error>{formik.touched.moneda && formik.errors.moneda}</FormHelperText> */}
                                     </FormControl>
                                     {/* <Form.Select
                                         fullWidth
@@ -254,12 +245,19 @@ const IngresarTransaccion = () => {
                                         label="Cantidad"
                                         value={formik.values.cantidad}
                                         onChange={formik.handleChange}
-                                        error={formik.touched.cantidad && Boolean(formik.errors.cantidad)}
-                                        helperText={formik.touched.cantidad && formik.errors.cantidad}
+                                    // error={formik.touched.cantidad && Boolean(formik.errors.cantidad)}
+                                    // helperText={formik.touched.cantidad && formik.errors.cantidad}
                                     />
                                 </div>
 
                                 <div className="form-group m-3">
+                                    <InputLabel id="demo-simple-select-standard-label"
+                                        sx={{
+                                            color: "white",
+                                            fontSize: 12
+                                        }}
+                                    >Cotizacion Actual</InputLabel>
+
                                     <TextField
                                         fullWidth
                                         sx={{
@@ -281,12 +279,10 @@ const IngresarTransaccion = () => {
                                                 color: "yellow"
                                             }
                                         }}
-                                        id="cotizacionActual"
+                                        id="valorActual"
                                         type="number"
-                                        name="cotizacionActual"
-                                        value={formik.values.cotizacionActual}
-
-
+                                        name="valorActual"
+                                        value={formik.values.valorActual}
                                     />
                                 </div>
 
