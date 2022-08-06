@@ -29,7 +29,10 @@ const GraficoVentas = () => {
     const [data, setData] = useState({ datos: datos, categorias: categorias })
 
     return (
-        <GraficaBarras {...data} />
+        <div>
+            <h1 className="mt-5"> Grafica monedas vendidas</h1>
+            <GraficaBarras {...data} />
+        </div>
     )
 }
 
