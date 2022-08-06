@@ -1,35 +1,10 @@
 import React from 'react'
-import { useEffect} from 'react'
-import { useSelector,useDispatch } from 'react-redux'
+import { useSelector} from 'react-redux'
 import Table from 'react-bootstrap/Table';
-import MontoFinal from '../montoTotal/MontoFinal';
-import { guardarMonedas } from "../../../features/monedas/MonedasSlice";
-import { apiMonedas } from "../../../services/ServiciosApi";
-import IngresarTransaccion from '../transacciones/IngresarTransaccion'
 
 const TablaMoneda = () => {
 
-    // const dispatch = useDispatch();
-
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         console.log("hola")
-    //         cargarMonedas();
-    //     }, 10000);
-    //     return () => clearInterval(interval);
-    // }, []);
-
     const monedas = useSelector(state => state.monedas.monedas)
-
-    
-    // const cargarMonedas = async () => {
-    //     try {
-    //         const monedas = await apiMonedas();
-    //         dispatch(guardarMonedas(monedas.monedas));
-    //     } catch (error) {
-    //         alert(error);
-    //     }
-    // }
 
     if (monedas.length !== 0) {
         return (
