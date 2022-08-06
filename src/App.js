@@ -13,9 +13,9 @@ import Dashboard from "./components/dashboard/Dashboard";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CerrarSesion from "./components/dashboard/cerrarSesion/CerrarSesion";
-import ValoresMoneda from "./components/dashboard/graficas/ValoresMoneda";
 import GraficoCompras from "./components/dashboard/graficas/GraficoCompras";
 import GraficoVentas from "./components/dashboard/graficas/GraficoVentas";
+import GraficoTransMoneda from "./components/dashboard/graficas/GraficoTransMoneda";
 
 const App = () => {
   return (
@@ -40,8 +40,8 @@ const App = () => {
                 element={<GraficoVentas />}
               />
               <Route
-                path="/Graficas/ValoresMoneda"
-                element={<ValoresMoneda />}
+                path="/Graficas/GraficaTransaccionesMoneda"
+                element={<GraficoTransMoneda />}
               />
               <Route path="/CerrarSesion" element={<CerrarSesion />} />
             </Route>
