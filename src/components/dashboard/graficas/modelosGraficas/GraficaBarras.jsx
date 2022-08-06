@@ -1,8 +1,7 @@
-import { green } from '@mui/material/colors';
 import React from 'react'
 import Chart from "react-apexcharts";
 
-const Grafica = ({ datos, categorias, nombreSeries = "" }) => {
+const GraficaBarras = ({ datos, categorias, nombreSeries = "" }) => {
   //console.log(`datos,categorias`, datos, categorias);
   const state = {
     options: {   
@@ -43,4 +42,4 @@ const Grafica = ({ datos, categorias, nombreSeries = "" }) => {
   );
 };
 
-export default Grafica;
+export default GraficaBarras;

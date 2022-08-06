@@ -1,7 +1,8 @@
 import React from 'react'
-import Grafica from './Grafica'
 import { useState } from 'react'
 import { useSelector } from 'react-redux';
+import GraficaBarras from './modelosGraficas/GraficaBarras';
+
 
 const GraficoVentas = () => {
     const transacciones = useSelector(state => state.transacciones.transacciones);
@@ -31,7 +32,7 @@ const GraficoVentas = () => {
   const [data, setData] = useState({datos: datos, categorias: categorias})
 
     return (
-     <Grafica {...data}/>
+     <GraficaBarras {...data}/>
     )
 }
 

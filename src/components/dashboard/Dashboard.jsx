@@ -28,7 +28,7 @@ const Dashboard = () => {
                    <NavDropdown title="Gráficas" id="navbarScrollingDropdown">
                     <NavDropdown.Item as={Link} to="/Graficas/GraficaCompras">Compras por Monedas</NavDropdown.Item>
                     <NavDropdown.Item as={Link} to="/Graficas/GraficaVentas">Ventas por Monedas</NavDropdown.Item>                    
-                    <NavDropdown.Item as={Link} to="/Graficas/ValoresMoneda">Valores por Moneda</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/Graficas/GraficaTransaccionesMoneda">Transferencias por Moneda</NavDropdown.Item>
                    </NavDropdown>                                                      
                    <Nav.Link as={Link} to="/CerrarSesion">Cerrar Sesión</Nav.Link>         
                  </Nav>
