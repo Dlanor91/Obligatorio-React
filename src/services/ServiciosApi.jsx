@@ -48,7 +48,7 @@ export const apiRegistro = async ({ usuario, password, idDepartamento, idCiudad 
         usuario: usuario,
         password: password,
         idDepartamento: idDepartamento,
-        idCiudad: idCiudad 
+        idCiudad: idCiudad
     });
 
     let requestOptions = {
@@ -64,7 +64,7 @@ export const apiRegistro = async ({ usuario, password, idDepartamento, idCiudad 
             switch (result.codigo) {
                 case 200:
                     return Promise.resolve(result);
-                
+
                 default:
                     return Promise.reject(result);
             }
@@ -72,12 +72,10 @@ export const apiRegistro = async ({ usuario, password, idDepartamento, idCiudad 
         .catch((error) => Promise.reject(error.mensaje ? error.mensaje : "Ah ocurrido un error, vuelva a intentarlo mas tarde"));
 }
 
-export const ApiTransaccion = async ({ idUsuario, tipoDeOperacion, moneda, cantidad, valorActual }) => {
-    console.log(idUsuario, tipoDeOperacion, moneda, cantidad, valorActual, "TRANSACCION API");
+export const ApiTransaccion = async ({ tipoOperacion, moneda, cantidad, valorActual }) => {
+    console.log(tipoOperacion, moneda, cantidad, valorActual, "TRANSACCION API");
 
     const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
-    
-    const dispatch = useDispatch();
 
     let headers = {
         "Content-Type": "application/json"
@@ -88,8 +86,8 @@ export const ApiTransaccion = async ({ idUsuario, tipoDeOperacion, moneda, canti
     }
 
     let raw = JSON.stringify({
-        idUsuario: idUsuario,
-        tipoOperacion: tipoDeOperacion,
+        idUsuario: dataLog.id,
+        tipoOperacion: tipoOperacion,
         moneda: moneda,
         cantidad: cantidad,
         valorActual: valorActual,
@@ -107,8 +105,7 @@ export const ApiTransaccion = async ({ idUsuario, tipoDeOperacion, moneda, canti
 
             switch (result.codigo) {
                 case 200:
-                    raw.id = result.id;
-                    dispatch(crearTransaccion(raw))
+
                     return Promise.resolve(result);
 
                 default:
@@ -118,9 +115,9 @@ export const ApiTransaccion = async ({ idUsuario, tipoDeOperacion, moneda, canti
         .catch((error) => Promise.reject(error.mensaje ? error.mensaje : "Ah ocurrido un error, vuelva a intentarlo mas tarde"));
 }
 
-export const apiMonedas= async () => {
-    
-    const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));    
+export const apiMonedas = async () => {
+
+    const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
 
     let headers = {
         "Content-Type": "application/json"
@@ -146,9 +143,9 @@ export const apiMonedas= async () => {
 }
 
 
-export const apiMostrarTransaccion= async () => {
-    
-    const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));    
+export const apiMostrarTransaccion = async () => {
+
+    const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
 
     let headers = {
         "Content-Type": "application/json"
