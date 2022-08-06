@@ -30,15 +30,17 @@ const GraficoCompras = () => {
   const [data, setData] = useState({datos: datos, categorias: categorias})
 
   if (transacciones.length != 0) {
-    return (    
-      <GraficaBarras {...data}/>   
+    return ( 
+    <div>
+            <h1 className="mt-5"> Grafica monedas compradas</h1>
+            <GraficaBarras {...data} />
+    </div>  
     )
   }else{
     return(
       
         <p className='parrafo fw-bold'> <br/>No hay Gráficas para mostrar!
         <Link style={{textDecoration:'none', color:"red"}} to="/IngresarTransaccion"> Ingresar Transacción</Link></p>
-      
     )
   }
 }

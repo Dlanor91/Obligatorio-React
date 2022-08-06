@@ -127,7 +127,7 @@ const GraficoTransMoneda = () => {
 
             {(mostrar) ?
                 (data.datos.length === 0) ? <p className='parrafo fw-bold'> <br />No hay Transacciones para mostrar!</p>
-                    : <GraficaLineas {...data} />
+                    : <div className='mt-5'><GraficaLineas {...data} /></div>
                 : <p className='parrafo fw-bold'> <br /></p>}
         </>
     )

@@ -31,7 +31,10 @@ const GraficoVentas = () => {
 
   if (transacciones.length != 0) {
     return (    
-      <GraficaBarras {...data}/>   
+      <div>
+            <h1 className="mt-5"> Grafica monedas vendidas</h1>
+            <GraficaBarras {...data} />
+        </div>  
 
     )
   }else{
@@ -39,7 +42,6 @@ const GraficoVentas = () => {
       
         <p className='parrafo fw-bold'> <br/>No hay Gráficas para mostrar!
         <Link style={{textDecoration:'none', color:"red"}} to="/IngresarTransaccion"> Ingresar Transacción</Link></p>
-      
     )
   }
 }
