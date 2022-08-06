@@ -6,6 +6,12 @@ import "./Registro.css";
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import Grid from '@mui/material/Grid';
 import { apiRegistro } from '../../services/ServiciosApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { guardarCiudades } from '../../features/ciudades/CiudadesSlice';
@@ -20,7 +26,7 @@ const Registro = () => {
     const mostrarDepartamentos = useSelector((state) => state.departamentos.departamentos);
     const mostrarCiudades = useSelector(state => state.ciudades.ciudades);;
 
-    const [idDepartamento, setIdDepartamento] = useState(0);
+    //const [idDepartamento, setIdDepartamento] = useState(0);
     const refCiudad = useRef(0);
 
 
@@ -32,7 +38,7 @@ const Registro = () => {
             .string('Ingrese su contraseña')
             .required('La contraseña no puede estar vacía.'),
         idDepartamento: yup
-            .number(0)
+            .string('Ingrese un Departamento')
             .required('Seleccione un departamento ....'),
     });
 
@@ -40,7 +46,7 @@ const Registro = () => {
         initialValues: {
             usuario: '',
             password: '',
-            idDepartamento: 0,
+            idDepartamento: '',
             idCiudad: 0
         },
         validationSchema: validationSchema,
@@ -62,9 +68,9 @@ const Registro = () => {
         }
     }
 
-    const capturarIdDepartamento = (event) => {
+    /* const capturarIdDepartamento = (event) => {
         setIdDepartamento(event.currentTarget.value);
-    }
+    } */
 
     useEffect(() => {
 
@@ -74,7 +80,7 @@ const Registro = () => {
 
                 switch (datos.codigo) {
                     case 200:
-                        dispatch(guardarDepartamentos(datos))
+                        dispatch(guardarDepartamentos(datos.departamentos))
                         break;
                     default:
                         alert("No se obtuvo una respuesta correcta.");
@@ -86,13 +92,13 @@ const Registro = () => {
 
     useEffect(() => {
 
-        fetch(`https://crypto.develotion.com/ciudades.php?idDepartamento=${idDepartamento}`)
+        fetch(`https://crypto.develotion.com/ciudades.php?idDepartamento=${formik.values.idDepartamento}`)
             .then(r => r.json())
             .then(datos => {
 
                 switch (datos.codigo) {
                     case 200:
-                        dispatch(guardarCiudades(datos))
+                        dispatch(guardarCiudades(datos.ciudades))
                         break;
                     default:
                         alert("No se obtuvo una respuesta correcta.");
@@ -101,7 +107,7 @@ const Registro = () => {
             })
             .catch((error) => Promise.reject(error.mensaje ? error.mensaje : "Ah ocurrido un error, vuelva a intentarlo mas tarde"));
 
-    }, [idDepartamento])
+    }, [formik.values.idDepartamento])
 
     return (
         <Container className='align-content-center container'>
@@ -176,21 +182,54 @@ const Registro = () => {
                         error={formik.touched.password && Boolean(formik.errors.password)}
                         helperText={formik.touched.password && formik.errors.password}
                     />
-                </Row>
-                <Row className="justify-content-center mb-2">
-                    <Form.Select
-                        id="idDepartamento"
-                        name="idDepartamento"
-                        className="w-50 m-2"
-                        onChange={formik.handleChange}
-                        onClick={capturarIdDepartamento}
-                        value={formik.values.idDepartamento}
-                    >
-                        <option key="0" value="0">Seleccione un Departamento ...</option>
-                        {mostrarDepartamentos.departamentos?.map(dep => <option key={dep.id} value={dep.id}>{dep.nombre}</option>)}
-                    </Form.Select>
-                </Row>
-                {idDepartamento !== 0 && <Row className="justify-content-center mb-2" >
+                </Row>                
+                <Grid item xs={12} sm={12} className="mb-2">
+                <FormControl sx={{m:0,minWidth: '50%' ,
+                                                color: "white",
+                                                borderColor: "white",
+                                                select: {
+                                                    color: "white",
+                                                    backgroundColor: "grey"
+                                                },
+                                                Label: {
+                                                    color: "white"
+                                                },
+                                                "&.MuiOutlinedInput-root": {
+                                                    "& fieldset": {
+                                                        borderColor: "white"
+                                                    }, "&.Mui-focused fieldset": {
+                                                        borderColor: "yellow"
+                                                    }
+                                                },
+                                                "& label.Mui-focused": {
+                                                    color: "yellow"
+                                                }
+                                            }}>
+                                            <InputLabel id="demo-simple-select-standard-label">Departamentos</InputLabel>
+                                            <Select
+                                                labelId="demo-simple-select-standard-label"
+                                                id="idDepartamento"
+                                                name='idDepartamento'
+                                                value={formik.values.idDepartamento}
+                                                onChange={formik.handleChange}
+                                                label="Departamentos"                           
+                                            >
+                                                <MenuItem value="">
+                                                    <em>Seleccione un departamento</em>
+                                                </MenuItem>
+                                                {mostrarDepartamentos.map((dep) => (
+                                                    <MenuItem
+                                                        key={dep.id}
+                                                        value={dep.id}
+                                                    >
+                                                        {dep.nombre}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                            <FormHelperText error>{formik.touched.idDepartamento && formik.errors.idDepartamento}</FormHelperText>
+                    </FormControl>  
+                </Grid>
+                {formik.values.idDepartamento != "" && <Row className="justify-content-center mb-2" >
                     <Form.Select
                         id="idCiudad"
                         name="idCiudad"
@@ -200,14 +239,14 @@ const Registro = () => {
                         value={formik.values.idCiudad}
                     >
                         <option key="0" value="0">Seleccione una Ciudad ...</option>
-                        {mostrarCiudades.ciudades?.map(city => <option key={city.id} value={city.id}>{city.nombre}</option>)}
+                        {mostrarCiudades?.map(city => <option key={city.id} value={city.id}>{city.nombre}</option>)}
 
                     </Form.Select>
                 </Row>}
                 <Row className="justify-content-center mb-3">
 
                     <button
-                        disabled={!formik.values.password || !formik.values.usuario || formik.values.idDepartamento == 0 || formik.values.idCiudad == 0}
+                        //disabled={!formik.values.password || !formik.values.usuario || formik.values.idDepartamento == 0 || formik.values.idCiudad == 0}
                         type="submit"
                         className="btn btn-dark btn-block px-1 mx-0 w-25"
                     >
