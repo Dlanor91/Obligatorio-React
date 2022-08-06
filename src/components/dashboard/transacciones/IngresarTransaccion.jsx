@@ -65,12 +65,16 @@ const IngresarTransaccion = () => {
     }
 
     const AgregarTransaccion = async (transaccion) => {
+
         try {
             const respuesta = await ApiTransaccion(transaccion);
+            transaccion.id = respuesta.idTransaccion
+            console.log(transaccion);
         } catch (error) {
             alert(error);
         }
     }
+
     if (monedas.length !== 0) {
         return (
 
