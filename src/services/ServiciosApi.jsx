@@ -142,7 +142,6 @@ export const apiMonedas = async () => {
         .catch((error) => Promise.reject(error.mensaje ? error.mensaje : "Ah ocurrido un error, vuelva a intentarlo mas tarde"));
 }
 
-
 export const apiMostrarTransaccion = async () => {
 
     const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
@@ -156,6 +155,48 @@ export const apiMostrarTransaccion = async () => {
     }
 
     return fetch(`${apiURL}/transacciones.php?idUsuario=${dataLog.id}`, { headers })
+        .then((response) => response.json())
+        .then((result) => {
+
+            switch (result.codigo) {
+                case 200:
+                    return Promise.resolve(result);
+
+                default:
+                    return Promise.reject(result);
+            }
+        })
+        .catch((error) => Promise.reject(error.mensaje ? error.mensaje : "Ah ocurrido un error, vuelva a intentarlo mas tarde"));
+}
+
+export const apiGuardarDepartamentos = async () => {
+    
+    let headers = {
+        "Content-Type": "application/json"
+    }
+
+    return fetch(`${apiURL}/departamentos.php`, { headers })
+        .then((response) => response.json())
+        .then((result) => {
+
+            switch (result.codigo) {
+                case 200:
+                    return Promise.resolve(result);
+
+                default:
+                    return Promise.reject(result);
+            }
+        })
+        .catch((error) => Promise.reject(error.mensaje ? error.mensaje : "Ah ocurrido un error, vuelva a intentarlo mas tarde"));
+}
+
+export const apiGuardarCiudades = async () => {
+    
+    let headers = {
+        "Content-Type": "application/json"
+    }
+
+    return fetch(`${apiURL}/ciudades.php`, { headers })
         .then((response) => response.json())
         .then((result) => {
 

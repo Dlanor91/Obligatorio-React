@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react'
+import React, { useEffect,useState} from 'react'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
@@ -12,18 +12,17 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import { apiRegistro } from '../../services/ServiciosApi';
-import { useDispatch, useSelector } from 'react-redux';
-import { guardarCiudades } from '../../features/ciudades/CiudadesSlice';
-import { guardarDepartamentos } from '../../features/departamentos/DepartamentosSlice'
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 const Registro = () => {
 
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const navigate = useNavigate();    
 
     const mostrarDepartamentos = useSelector((state) => state.departamentos.departamentos);
-    const mostrarCiudades = useSelector(state => state.ciudades.ciudades);;
+    const guardarCiudadesMos = useSelector(state => state.ciudades.ciudades);    
+    const [mostrarCiudades, setMostrarCiudades] = useState([]);
 
     const validationSchema = yup.object({
         usuario: yup
@@ -66,44 +65,13 @@ const Registro = () => {
         }
     }
 
-    useEffect(() => {
-
-        fetch(`https://crypto.develotion.com/departamentos.php`)
-            .then(r => r.json())
-            .then(datos => {
-
-                switch (datos.codigo) {
-                    case 200:
-                        dispatch(guardarDepartamentos(datos.departamentos))
-                        break;
-                    default:
-                        alert("No se obtuvo una respuesta correcta.");
-                        break;
-                }
-            })
-            .catch((error) => Promise.reject(error.mensaje ? error.mensaje : "Ah ocurrido un error, vuelva a intentarlo mas tarde"));
-    }, [])
-
-    useEffect(() => {
-
-        fetch(`https://crypto.develotion.com/ciudades.php?idDepartamento=${formik.values.idDepartamento}`)
-            .then(r => r.json())
-            .then(datos => {
-
-                switch (datos.codigo) {
-                    case 200:
-                        dispatch(guardarCiudades(datos.ciudades))
-                        break;
-                    default:
-                        alert("No se obtuvo una respuesta correcta.");
-                        break;
-                }
-            })
-            .catch((error) => Promise.reject(error.mensaje ? error.mensaje : "Ah ocurrido un error, vuelva a intentarlo mas tarde"));
-
+    useEffect(() => {        
+        const buscarCity = guardarCiudadesMos.filter(ciudades => ciudades.id_departamento ==formik.values.idDepartamento );
+        setMostrarCiudades(buscarCity);
     }, [formik.values.idDepartamento])
 
-    return (
+    return (        
+         
         <Container className='align-content-center container'>
             <Form className='formulario' onSubmit={formik.handleSubmit} >
                 <h2 className='formulario-titulo py-2'>Registro</h2>

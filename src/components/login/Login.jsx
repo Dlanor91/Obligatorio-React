@@ -1,7 +1,7 @@
 import React from "react";
 import Titulo from "./titulo/Titulo";
 import "./Login.css";
-import { apiLogin, apiMonedas, apiMostrarTransaccion } from "../../services/ServiciosApi";
+import { apiGuardarCiudades, apiGuardarDepartamentos, apiLogin, apiMonedas, apiMostrarTransaccion } from "../../services/ServiciosApi";
 import * as yup from 'yup'
 import { useFormik } from 'formik'
 import TextField from '@mui/material/TextField'
@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { guardarMonedas } from "../../features/monedas/MonedasSlice";
 import { guardarTransacciones } from "../../features/transacciones/TransaccionesSlice";
+import { guardarDepartamentos } from "../../features/departamentos/DepartamentosSlice";
+import { guardarCiudades } from "../../features/ciudades/CiudadesSlice";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -47,6 +49,19 @@ const Login = () => {
             alert(error);
         }
     }
+
+    const Registro = async(e)=>{
+        try {
+            e.preventDefault();
+            const departamentosBuscar = await apiGuardarDepartamentos();
+            dispatch(guardarDepartamentos(departamentosBuscar.departamentos))
+            const ciudadesBuscar = await apiGuardarCiudades();
+            dispatch(guardarCiudades(ciudadesBuscar.ciudades)) 
+            navigate("/Registro");
+        } catch (error) {
+            alert(error);
+        }
+    } 
 
     return (
         <div className="container">
@@ -141,7 +156,7 @@ const Login = () => {
                                 <button
                                     type="submit"
                                     className="btn btn-dark btn-block m-3"
-                                    onClick={() => navigate("/Registro")}
+                                    onClick={Registro}
                                 >
                                     Registrarse{" "}
                                 </button>

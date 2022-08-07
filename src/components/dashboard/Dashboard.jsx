@@ -7,9 +7,9 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Navigate } from 'react-router-dom';
 import { Outlet, Link } from 'react-router-dom';
 
-
 const Dashboard = () => {
     const dataLog = JSON.parse(sessionStorage.getItem("DatosLog"));
+       
     if (dataLog == null) {
         return <Navigate replace to={"/Login"}></Navigate>;
     } else {
@@ -40,8 +40,6 @@ const Dashboard = () => {
             </div>
         )
     }
-
-
 
 }
 
