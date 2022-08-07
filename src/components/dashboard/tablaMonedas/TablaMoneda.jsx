@@ -21,7 +21,7 @@ const TablaMoneda = () => {
     } 
    const datos = monedas.map((idM) =>(filtarTrans(idM.id,idM.cotizacion,idM.nombre)) ) 
 
-   console.log(datos)
+   //console.log(datos)
 
     if (monedas.length !== 0) {
         return (
