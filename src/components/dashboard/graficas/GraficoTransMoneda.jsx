@@ -61,7 +61,8 @@ const GraficoTransMoneda = () => {
     if (transacciones.length != 0) {
     return (
         <>
-            <div className="mt-5">
+            <h1 className="mt-4">Transferencias</h1>
+            <div className="mt-3">
                 <div className="d-flex justify-content-center h-100">
                     <div className="card align-items-center">
                         <div className="card-body">

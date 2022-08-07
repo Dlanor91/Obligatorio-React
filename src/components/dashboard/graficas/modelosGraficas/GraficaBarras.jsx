@@ -12,13 +12,20 @@ const GraficaBarras = ({ datos, categorias, nombreSeries = "" }) => {
                     borderRadius: 10,
                     columnWidth: '55%',
                 }
-            },
+            },            
             chart: {
                 id: "apexchart-example",
-                background: 'gold',
+                background: 'gold', 
+                              
             },
             xaxis: {
                 categories: categorias,
+                labels: {
+                    style: {
+                      fontSize: '14px',
+                      fontWeight: 100,
+                    },
+                  } 
             },
         },
         series: [
@@ -31,15 +38,15 @@ const GraficaBarras = ({ datos, categorias, nombreSeries = "" }) => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="container">
             <div className="d-flex justify-content-center h-100">
                 <Chart
                     className="pepe"
                     options={state.options}
                     series={state.series}
                     type="bar"
-                    width={600}
-                    height={400}
+                    width={700}
+                    height={450}
                     align="center"
                 />
 
