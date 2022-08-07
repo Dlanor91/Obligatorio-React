@@ -7,34 +7,46 @@ const TablaMoneda = () => {
     const transacciones = useSelector(state => state.transacciones.transacciones);
     const monedas = useSelector(state => state.monedas.monedas);
         
-    const filtarTrans = (id) =>{
+    const filtarTrans = (id,nombre,cot) =>{
         const filtro = transacciones.findLast(t => t.moneda == id);
-        return filtro;
+                
+        const ultimaMoneda = {
+            id:id,            
+            cotizacionActual: cot,
+            nombre: nombre,
+            cotizacionAnterior: filtro.valor_actual,
+            tipoOperacion: (filtro.tipo_operacion ==1 )?"Compra":"Venta",
+            IA: (cot == undefined)?"Sin acciones":(cot>filtro.valor_actual)? "Vender": "Comprar"
+        }               
+        return ultimaMoneda;
     } 
-   const datos = monedas.map((idM) =>(filtarTrans(idM.id)) ) 
-    console.log(datos)
-    
+   const datos = monedas.map((idM) =>(filtarTrans(idM.id,idM.nombre,idM.cotizacion)) ) 
+   console.log(datos)
+
     if (monedas.length !== 0) {
         return (
+            <>
             <div className='px-2 m-5'>
                  
-                <h2 className=''>Monedas</h2>
+                <h2 className='' style={{color:"white",backgroundColor:"gray"}}>Monedas</h2>
                 
                 <Table striped variant="dark">
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Cotizacion</th>
-                            <th>IA</th>
+                            <th>Cotizacion Actual</th>
+                            <th>Cotizacion Anterior</th>
+                            <th>Recomendacion</th>
                         </tr>
                     </thead>
                     <tbody>                    
-                        {monedas.map((mon, index) => {
+                        {datos.map((dato, index) => {
                             return (                                
                                 <tr key={index}>
-                                    <td>{mon.nombre}</td>                                    
-                                    <td>{mon.cotizacion}</td> 
-                                   <td>Aqui</td>                                
+                                    <td>{dato.nombre}</td>                                    
+                                    <td>{dato.cotizacionActual}</td>
+                                    <td>{dato.cotizacionAnterior}</td> 
+                                   <td>{dato.IA}</td>                                
                                 </tr>
                             )
                         })}
@@ -42,6 +54,7 @@ const TablaMoneda = () => {
                 </Table>
 
             </div>
+            </>
         )
     } else {
         <div> No hay conexion</div>
