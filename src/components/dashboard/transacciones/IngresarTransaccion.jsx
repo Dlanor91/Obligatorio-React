@@ -15,6 +15,7 @@ import InputLabel from '@mui/material/InputLabel';
 import { guardarMonedas } from "../../../features/monedas/MonedasSlice";
 import { apiMonedas } from "../../../services/ServiciosApi";
 import TablaMoneda from '../tablaMonedas/TablaMoneda'
+import { InteligenciaArtificial } from './InteligenciaArtificial'
 
 const IngresarTransaccion = () => {
 
@@ -93,7 +94,7 @@ const IngresarTransaccion = () => {
             <div className="container mt-5">
 
                 <div className="d-flex justify-content-center h-100">
-
+                    <InteligenciaArtificial />
                     <div className="card align-items-center">
 
                         <div className="card-header">
