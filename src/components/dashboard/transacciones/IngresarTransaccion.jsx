@@ -27,7 +27,7 @@ const IngresarTransaccion = () => {
         const interval = setInterval(() => {
             cargarMonedas();
             mostrarValor();
-        }, 10000);
+        }, 30000);
         return () => clearInterval(interval);
     }, []);
 
@@ -86,7 +86,7 @@ const IngresarTransaccion = () => {
             delete transaccion.valorActual
             transaccion.tipo_operacion = transaccion.tipoOperacion;
             delete transaccion.tipoOperacion
-            console.log(transaccion)
+            //console.log(transaccion)
             navigate("/")
             dispatch(crearTransaccion(transaccion))
             
