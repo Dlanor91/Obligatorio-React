@@ -86,10 +86,9 @@ const IngresarTransaccion = () => {
             delete transaccion.valorActual
             transaccion.tipo_operacion = transaccion.tipoOperacion;
             delete transaccion.tipoOperacion
-            //console.log(transaccion)
             navigate("/")
             dispatch(crearTransaccion(transaccion))
-            
+
         } catch (error) {
             alert(error);
         }
@@ -97,169 +96,39 @@ const IngresarTransaccion = () => {
 
     if (monedas.length !== 0) {
         return (
-            <div className="container mt-5">
 
-                <div className="d-flex justify-content-center h-100">
-                   {/* <InteligenciaArtificial /> */}
-                    <div className="card align-items-center">
 
-                        <div className="card-header">
-                            <h1> Transacciones </h1>
-                        </div>
+            <div className="d-flex justify-content-center h-100">
 
-                        <div className="card-body">
-                            <form onSubmit={formik.handleSubmit}>
-                                <div className="form-group m-3">
+                <div className="card align-items-center">
 
-                                    <FormControl sx={{ m: 0, minWidth: '100%' }}>
-                                        <InputLabel id="demo-simple-select-standard-label"
-                                            sx={{
-                                                color: "white",
-                                            }}
-                                        >Transaccion</InputLabel>
+                    <div className="card-header">
+                        <h1 className=''> Transacciones </h1>
+                    </div>
 
-                                        <Select
-                                            sx={{
-                                                color: "white",
-                                                borderColor: "white",
-                                                select: {
-                                                    color: "white",
-                                                    backgroundColor: "grey"
-                                                },
-                                                Label: {
-                                                    color: "white"
-                                                },
-                                                "&.MuiOutlinedInput-root": {
-                                                    "& fieldset": {
-                                                        borderColor: "white"
-                                                    }, "&.Mui-focused fieldset": {
-                                                        borderColor: "yellow"
-                                                    }
-                                                },
-                                                "& label.Mui-focused": {
-                                                    color: "yellow"
-                                                }
-                                            }}
-                                            labelId="demo-simple-select-standard-label"
-                                            id="tipoOperacion"
-                                            name='tipoOperacion'
-                                            value={formik.values.tipoOperacion}
-                                            onChange={formik.handleChange}
-                                            error={formik.touched.tipoOperacion && Boolean(formik.errors.tipoOperacion)}
-                                        >
-                                            <MenuItem value=""> Seleccione tipo de compra... </MenuItem>
-                                            <MenuItem key={1} value={1}> Compra </MenuItem>
-                                            <MenuItem key={2} value={2}> Venta </MenuItem>
+                    <div className="card-body">
+                        <form onSubmit={formik.handleSubmit}>
+                            <div className="form-group m-3">
 
-                                        </Select>
-                                        <FormHelperText error>{formik.touched.tipoOperacion && formik.errors.tipoOperacion}</FormHelperText>
-                                    </FormControl>
-                                </div>
-
-                                <div className="form-group m-3">
-                                    <FormControl sx={{ m: 0, minWidth: '100%' }}>
-                                        <InputLabel id="demo-simple-select-standard-label"
-                                            sx={{
-                                                color: "white"
-                                            }}
-                                        >Moneda</InputLabel>
-                                        <Select
-                                            sx={{
-                                                color: "white",
-                                                borderColor: "white",
-                                                select: {
-                                                    color: "white",
-                                                    backgroundColor: "grey"
-                                                },
-                                                Label: {
-                                                    color: "white"
-                                                },
-                                                "&.MuiOutlinedInput-root": {
-                                                    "& fieldset": {
-                                                        borderColor: "white"
-                                                    }, "&.Mui-focused fieldset": {
-                                                        borderColor: "yellow"
-                                                    }
-                                                },
-                                                "& label.Mui-focused": {
-                                                    color: "yellow"
-                                                }
-                                            }}
-                                            labelId="demo-simple-select-standard-label"
-                                            id="moneda"
-                                            name='moneda'
-                                            onChange={formik.handleChange}
-                                            value={formik.values.moneda}
-                                            error={formik.touched.moneda && Boolean(formik.errors.moneda)}
-                                        >
-                                            <MenuItem value="">
-                                                <em>Seleccione una moneda</em>
-                                            </MenuItem>
-                                            {monedas.map((m) => (
-                                                <MenuItem
-                                                    key={m.id}
-                                                    value={m.id}
-                                                >
-                                                    {m.nombre}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                        <FormHelperText error>{formik.touched.moneda && formik.errors.moneda}</FormHelperText>
-                                    </FormControl>
-
-                                </div>
-
-                                <div className="form-group m-3">
-                                    <TextField
-                                        sx={{
-                                            input: {
-                                                color: "white",
-                                                backgroundColor: "grey"
-                                            },
-                                            Label: {
-                                                color: "white"
-                                            },
-                                            "& .MuiOutlinedInput-root": {
-                                                "& fieldset": {
-                                                    borderColor: "white"
-                                                }, "&.Mui-focused fieldset": {
-                                                    borderColor: "yellow"
-                                                }
-                                            },
-                                            "& label.Mui-focused": {
-                                                color: "yellow"
-                                            }
-                                        }}
-                                        id="cantidad"
-                                        type="number"
-                                        name="cantidad"
-                                        label="Cantidad"
-                                        value={formik.values.cantidad}
-                                        onChange={formik.handleChange}
-                                        error={formik.touched.cantidad && Boolean(formik.errors.cantidad)}
-                                        helperText={formik.touched.cantidad && formik.errors.cantidad}
-                                    />
-                                </div>
-
-                                <div className="form-group m-3">
+                                <FormControl sx={{ m: 0, minWidth: '100%' }}>
                                     <InputLabel id="demo-simple-select-standard-label"
                                         sx={{
                                             color: "white",
-                                            fontSize: 12
                                         }}
-                                    >Cotizacion Actual</InputLabel>
+                                    >Transaccion</InputLabel>
 
-                                    <TextField
-                                        fullWidth
+                                    <Select
                                         sx={{
-                                            input: {
+                                            color: "white",
+                                            borderColor: "white",
+                                            select: {
                                                 color: "white",
                                                 backgroundColor: "grey"
                                             },
                                             Label: {
                                                 color: "white"
                                             },
-                                            "& .MuiOutlinedInput-root": {
+                                            "&.MuiOutlinedInput-root": {
                                                 "& fieldset": {
                                                     borderColor: "white"
                                                 }, "&.Mui-focused fieldset": {
@@ -270,30 +139,160 @@ const IngresarTransaccion = () => {
                                                 color: "yellow"
                                             }
                                         }}
-                                        id="valorActual"
-                                        type="number"
-                                        name="valorActual"
-                                        value={mostrarValor()}
-                                        error={formik.touched.valorActual && Boolean(formik.errors.valorActual)}
-                                        helperText={formik.touched.valorActual && formik.errors.valorActual}
-                                    />
-                                </div>
-
-                                <div className="form-group my-3">
-                                    <button
-                                        type="submit"
-                                        className="btn btn-dark btn-block m-3"
+                                        labelId="demo-simple-select-standard-label"
+                                        id="tipoOperacion"
+                                        name='tipoOperacion'
+                                        value={formik.values.tipoOperacion}
+                                        onChange={formik.handleChange}
+                                        error={formik.touched.tipoOperacion && Boolean(formik.errors.tipoOperacion)}
                                     >
-                                        Ingresar{" "}
-                                    </button>
-                                </div>
+                                        <MenuItem value=""> Seleccione tipo de compra... </MenuItem>
+                                        <MenuItem key={1} value={1}> Compra </MenuItem>
+                                        <MenuItem key={2} value={2}> Venta </MenuItem>
 
-                            </form>
-                        </div>
+                                    </Select>
+                                    <FormHelperText error>{formik.touched.tipoOperacion && formik.errors.tipoOperacion}</FormHelperText>
+                                </FormControl>
+                            </div>
+
+                            <div className="form-group m-3">
+                                <FormControl sx={{ m: 0, minWidth: '100%' }}>
+                                    <InputLabel id="demo-simple-select-standard-label"
+                                        sx={{
+                                            color: "white"
+                                        }}
+                                    >Moneda</InputLabel>
+                                    <Select
+                                        sx={{
+                                            color: "white",
+                                            borderColor: "white",
+                                            select: {
+                                                color: "white",
+                                                backgroundColor: "grey"
+                                            },
+                                            Label: {
+                                                color: "white"
+                                            },
+                                            "&.MuiOutlinedInput-root": {
+                                                "& fieldset": {
+                                                    borderColor: "white"
+                                                }, "&.Mui-focused fieldset": {
+                                                    borderColor: "yellow"
+                                                }
+                                            },
+                                            "& label.Mui-focused": {
+                                                color: "yellow"
+                                            }
+                                        }}
+                                        labelId="demo-simple-select-standard-label"
+                                        id="moneda"
+                                        name='moneda'
+                                        onChange={formik.handleChange}
+                                        value={formik.values.moneda}
+                                        error={formik.touched.moneda && Boolean(formik.errors.moneda)}
+                                    >
+                                        <MenuItem value="">
+                                            <em>Seleccione una moneda</em>
+                                        </MenuItem>
+                                        {monedas.map((m) => (
+                                            <MenuItem
+                                                key={m.id}
+                                                value={m.id}
+                                            >
+                                                {m.nombre}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                    <FormHelperText error>{formik.touched.moneda && formik.errors.moneda}</FormHelperText>
+                                </FormControl>
+
+                            </div>
+
+                            <div className="form-group m-3">
+                                <TextField
+                                    sx={{
+                                        input: {
+                                            color: "white",
+                                            backgroundColor: "grey"
+                                        },
+                                        Label: {
+                                            color: "white"
+                                        },
+                                        "& .MuiOutlinedInput-root": {
+                                            "& fieldset": {
+                                                borderColor: "white"
+                                            }, "&.Mui-focused fieldset": {
+                                                borderColor: "yellow"
+                                            }
+                                        },
+                                        "& label.Mui-focused": {
+                                            color: "yellow"
+                                        }
+                                    }}
+                                    id="cantidad"
+                                    type="number"
+                                    name="cantidad"
+                                    label="Cantidad"
+                                    value={formik.values.cantidad}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.cantidad && Boolean(formik.errors.cantidad)}
+                                    helperText={formik.touched.cantidad && formik.errors.cantidad}
+                                />
+                            </div>
+
+                            <div className="form-group m-3">
+                                <InputLabel id="demo-simple-select-standard-label"
+                                    sx={{
+                                        color: "white",
+                                        fontSize: 12
+                                    }}
+                                >Cotizacion Actual</InputLabel>
+
+                                <TextField
+                                    fullWidth
+                                    sx={{
+                                        input: {
+                                            color: "white",
+                                            backgroundColor: "grey"
+                                        },
+                                        Label: {
+                                            color: "white"
+                                        },
+                                        "& .MuiOutlinedInput-root": {
+                                            "& fieldset": {
+                                                borderColor: "white"
+                                            }, "&.Mui-focused fieldset": {
+                                                borderColor: "yellow"
+                                            }
+                                        },
+                                        "& label.Mui-focused": {
+                                            color: "yellow"
+                                        }
+                                    }}
+                                    id="valorActual"
+                                    type="number"
+                                    name="valorActual"
+                                    value={mostrarValor()}
+                                    error={formik.touched.valorActual && Boolean(formik.errors.valorActual)}
+                                    helperText={formik.touched.valorActual && formik.errors.valorActual}
+                                />
+                            </div>
+
+                            <div className="form-group my-3">
+                                <button
+                                    type="submit"
+                                    className="btn btn-dark btn-block m-3"
+                                >
+                                    Ingresar{" "}
+                                </button>
+                            </div>
+
+                        </form>
                     </div>
-                    <TablaMoneda />
                 </div>
+                <TablaMoneda />
             </div>
+
         )
     } else {
         return <div> No hay conexion</div>
