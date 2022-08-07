@@ -147,7 +147,7 @@ const Login = () => {
 
                             <div className="form-group mt-3">
                                 <button
-                                    disabled={!formik.values.password && !formik.values.usuario}
+                                    disabled={!formik.values.password || !formik.values.usuario}
                                     type="submit"
                                     className="btn btn-dark btn-block m-3"
                                 >
