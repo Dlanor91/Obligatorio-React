@@ -16,9 +16,10 @@ import { guardarMonedas } from "../../../features/monedas/MonedasSlice";
 import { apiMonedas } from "../../../services/ServiciosApi";
 import TablaMoneda from '../tablaMonedas/TablaMoneda'
 import { InteligenciaArtificial } from './InteligenciaArtificial'
+import { useNavigate } from 'react-router-dom'
 
 const IngresarTransaccion = () => {
-
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const monedas = useSelector(state => state.monedas.monedas)
 
@@ -83,7 +84,12 @@ const IngresarTransaccion = () => {
             transaccion.id = respuesta.idTransaccion
             transaccion.valor_actual = transaccion.valorActual;
             delete transaccion.valorActual
+            transaccion.tipo_operacion = transaccion.tipoOperacion;
+            delete transaccion.tipoOperacion
+            console.log(transaccion)
+            navigate("/")
             dispatch(crearTransaccion(transaccion))
+            
         } catch (error) {
             alert(error);
         }
