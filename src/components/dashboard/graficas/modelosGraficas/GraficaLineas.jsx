@@ -39,6 +39,13 @@ const GraficaLineas = ({ datos, categorias, nombreSeries = "" }) => {
             },
             xaxis: {
                 categories: categorias,
+                labels: {
+                    style: {
+                      fontSize: '14px',
+                      fontWeight: 100,
+
+                    },
+                  }
             },
         },
         series: [
@@ -56,8 +63,8 @@ const GraficaLineas = ({ datos, categorias, nombreSeries = "" }) => {
                 options={state.options}
                 series={state.series}
                 type="line"
-                width={600}
-                height={400}
+                width={700}
+                height={450}
                 align="center"
             />
         </div>

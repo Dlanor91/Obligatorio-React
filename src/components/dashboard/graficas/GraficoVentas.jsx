@@ -32,7 +32,7 @@ const GraficoVentas = () => {
   if (transacciones.length != 0) {
     return (    
       <div>
-            <h1 className="mt-5"> Grafica monedas vendidas</h1>
+            <h1 className="mt-5">Monedas Vendidas</h1>
             <GraficaBarras {...data} />
         </div>  
 
