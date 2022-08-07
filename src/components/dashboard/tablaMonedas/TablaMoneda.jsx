@@ -7,20 +7,20 @@ const TablaMoneda = () => {
     const transacciones = useSelector(state => state.transacciones.transacciones);
     const monedas = useSelector(state => state.monedas.monedas);
         
-    const filtarTrans = (id,nombre,cot) =>{
-        const filtro = transacciones.findLast(t => t.moneda == id);
-                
+    const filtarTrans = (id,cot,nombre) =>{
+        const filtro = transacciones.findLast(t => t.moneda == id);  
+        console.log(filtro);             
         const ultimaMoneda = {
             id:id,            
             cotizacionActual: cot,
             nombre: nombre,
-            cotizacionAnterior: filtro.valor_actual,
-            tipoOperacion: (filtro.tipo_operacion ==1 )?"Compra":"Venta",
-            IA: (cot == undefined)?"Sin acciones":(cot>filtro.valor_actual)? "Vender": "Comprar"
+            cotizacionAnterior: (filtro == undefined)?"-":filtro.valor_actual,
+            IA: (filtro == undefined)?"Sin acciones":(cot>filtro.valor_actual)? "Vender": "Comprar"
         }               
         return ultimaMoneda;
     } 
-   const datos = monedas.map((idM) =>(filtarTrans(idM.id,idM.nombre,idM.cotizacion)) ) 
+   const datos = monedas.map((idM) =>(filtarTrans(idM.id,idM.cotizacion,idM.nombre)) ) 
+
    console.log(datos)
 
     if (monedas.length !== 0) {
@@ -46,7 +46,7 @@ const TablaMoneda = () => {
                                     <td>{dato.nombre}</td>                                    
                                     <td>{dato.cotizacionActual}</td>
                                     <td>{dato.cotizacionAnterior}</td> 
-                                   <td>{dato.IA}</td>                                
+                                   <td>{dato.IA}</td>                              
                                 </tr>
                             )
                         })}
