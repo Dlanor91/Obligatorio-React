@@ -94,7 +94,7 @@ const IngresarTransaccion = () => {
             <div className="container mt-5">
 
                 <div className="d-flex justify-content-center h-100">
-                    <InteligenciaArtificial />
+                   {/* <InteligenciaArtificial /> */}
                     <div className="card align-items-center">
 
                         <div className="card-header">
