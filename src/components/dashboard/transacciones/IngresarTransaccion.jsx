@@ -15,7 +15,6 @@ import InputLabel from '@mui/material/InputLabel';
 import { guardarMonedas } from "../../../features/monedas/MonedasSlice";
 import { apiMonedas } from "../../../services/ServiciosApi";
 import TablaMoneda from '../tablaMonedas/TablaMoneda'
-import { InteligenciaArtificial } from './InteligenciaArtificial'
 import { useNavigate } from 'react-router-dom'
 
 const IngresarTransaccion = () => {
