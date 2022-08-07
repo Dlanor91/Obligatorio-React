@@ -36,9 +36,9 @@ const TablaMoneda = () => {
                             <thead>
                                 <tr>
                                     <th>Nombre</th>
-                                    <th>Cotizacion Actual</th>
-                                    <th>Cotizacion Anterior</th>
-                                    <th>Recomendacion</th>
+                                    <th>Cotización Actual</th>
+                                    <th>Cotización Anterior</th>
+                                    <th>Recomendación</th>
                                 </tr>
                             </thead>
 

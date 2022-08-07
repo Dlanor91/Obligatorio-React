@@ -114,7 +114,7 @@ const IngresarTransaccion = () => {
                                         sx={{
                                             color: "white",
                                         }}
-                                    >Transaccion</InputLabel>
+                                    >Transacción</InputLabel>
 
                                     <Select
                                         sx={{
@@ -282,7 +282,7 @@ const IngresarTransaccion = () => {
                                     type="submit"
                                     className="btn btn-dark btn-block m-3"
                                 >
-                                    Ingresar{" "}
+                                    Ingresar Transacción{" "}
                                 </button>
                             </div>
 
